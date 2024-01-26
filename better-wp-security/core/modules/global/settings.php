@@ -1,8 +1,26 @@
 <?php
 
 use iThemesSecurity\Config_Settings;
+use iThemesSecurity\Module_Config;
+use iThemesSecurity\Strauss\StellarWP\Telemetry\Opt_In\Status as Opt_In_Status;
 
 final class ITSEC_Global_Settings extends Config_Settings {
+
+	/** @var Opt_In_Status */
+	private $opt_in_status;
+
+	public function __construct( Module_Config $config, Opt_In_Status $opt_in_status ) {
+		$this->opt_in_status = $opt_in_status;
+
+		parent::__construct( $config );
+	}
+
+	public function load() {
+		parent::load();
+
+		$this->settings['allow_tracking'] = $this->opt_in_status->is_active();
+	}
+
 	public function get_default( $setting, $default = null ) {
 		$default = parent::get_default( $setting, $default );
 
@@ -56,6 +74,10 @@ final class ITSEC_Global_Settings extends Config_Settings {
 		if ( $this->settings['use_cron'] !== $old_settings['use_cron'] ) {
 			$this->handle_cron_change( $this->settings['use_cron'] );
 		}
+
+		if ( $this->settings['allow_tracking'] !== $old_settings['allow_tracking'] ) {
+			$this->opt_in_status->set_status( $this->settings['allow_tracking'], 'solid-security' );
+		}
 	}
 
 	private function handle_cron_change( $new_use_cron ) {
@@ -99,6 +121,9 @@ final class ITSEC_Global_Settings extends Config_Settings {
 	}
 }
 
-ITSEC_Modules::register_settings( new ITSEC_Global_Settings( ITSEC_Modules::get_config( 'global' ) ) );
+ITSEC_Modules::register_settings( new ITSEC_Global_Settings(
+	ITSEC_Modules::get_config( 'global' ),
+	ITSEC_Modules::get_container()->get( Opt_In_Status::class ),
+) );
 
 class_alias( ITSEC_Global_Settings::class, 'ITSEC_Global_Settings_New' );
