@@ -1065,3 +1065,10 @@
 	Bug Fix: Add missing text domain to new Solid Security Admin Menu items.
 	Bug Fix: Reset filters on the Vulnerabilities page when starting a Site Scan.
 	Bug Fix: PHP warning on the logs page when the File Change module logs unexpected data.
+9.3.1 - 2024-02-07 - Timothy Jacobs, Lisa Canini, Jared Hill
+	Tweak: Add a notice when a user's role is demoted from the Site Scans page.
+	Tweak: Update Privacy Policy generator text.
+	Bug Fix: Could not proceed through onboarding when BuddyPress or BuddyBoss was active.
+	Bug Fix: Some firewall rules could not be deactivated.
+	Bug Fix: Allow opting in to Telemetry via the Settings Page.
+	Bug Fix: PHP 8.2 deprecation warnings.

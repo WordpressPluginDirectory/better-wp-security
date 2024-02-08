@@ -2,6 +2,7 @@
 
 use iThemesSecurity\Config_Settings;
 use iThemesSecurity\Module_Config;
+use iThemesSecurity\Strauss\StellarWP\Telemetry\Opt_In\Opt_In_Subscriber;
 use iThemesSecurity\Strauss\StellarWP\Telemetry\Opt_In\Status as Opt_In_Status;
 
 final class ITSEC_Global_Settings extends Config_Settings {
@@ -9,8 +10,12 @@ final class ITSEC_Global_Settings extends Config_Settings {
 	/** @var Opt_In_Status */
 	private $opt_in_status;
 
-	public function __construct( Module_Config $config, Opt_In_Status $opt_in_status ) {
-		$this->opt_in_status = $opt_in_status;
+	/** @var Opt_In_Subscriber */
+	private $opt_in_subscriber;
+
+	public function __construct( Module_Config $config, Opt_In_Status $opt_in_status, Opt_In_Subscriber $opt_in_subscriber ) {
+		$this->opt_in_status     = $opt_in_status;
+		$this->opt_in_subscriber = $opt_in_subscriber;
 
 		parent::__construct( $config );
 	}
@@ -76,7 +81,15 @@ final class ITSEC_Global_Settings extends Config_Settings {
 		}
 
 		if ( $this->settings['allow_tracking'] !== $old_settings['allow_tracking'] ) {
-			$this->opt_in_status->set_status( $this->settings['allow_tracking'], 'solid-security' );
+			if ( $this->settings['allow_tracking'] ) {
+				// The opt-in code is not tolerant to being run outside of WP-Admin.
+				require_once ABSPATH . 'wp-admin/includes/update.php';
+				require_once ABSPATH . 'wp-admin/includes/misc.php';
+
+				$this->opt_in_subscriber->opt_in( 'solid-security' );
+			} else {
+				$this->opt_in_status->set_status( false, 'solid-security' );
+			}
 		}
 	}
 
@@ -124,6 +137,7 @@ final class ITSEC_Global_Settings extends Config_Settings {
 ITSEC_Modules::register_settings( new ITSEC_Global_Settings(
 	ITSEC_Modules::get_config( 'global' ),
 	ITSEC_Modules::get_container()->get( Opt_In_Status::class ),
+	ITSEC_Modules::get_container()->get( Opt_In_Subscriber::class ),
 ) );
 
 class_alias( ITSEC_Global_Settings::class, 'ITSEC_Global_Settings_New' );

@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, jthillithemes, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 9.3.0
+Stable tag: 9.3.1
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -174,6 +174,14 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.3.1 =
+* Tweak: Add a notice when a user's role is demoted from the Site Scans page.
+* Tweak: Update Privacy Policy generator text.
+* Bug Fix: Could not proceed through onboarding when BuddyPress or BuddyBoss was active.
+* Bug Fix: Some firewall rules could not be deactivated.
+* Bug Fix: Allow opting in to Telemetry via the Settings Page.
+* Bug Fix: PHP 8.2 deprecation warnings.
 
 = 9.3.0 =
 * New: The Firewall page has a new IP Management tab to provide easy access to blocking or authorizing IP addresses.
