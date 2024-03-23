@@ -144,6 +144,10 @@ final class ITSEC_Lockout {
 			return;
 		}
 
+		if ( ! ITSEC_Lib_IP_Detector::is_configured() ) {
+			return;
+		}
+
 		$host = ITSEC_Lib::get_ip();
 
 		if ( ITSEC_Lib::is_ip_banned() ) {
@@ -764,7 +768,10 @@ final class ITSEC_Lockout {
 	 * @return void
 	 */
 	public function execute_lock( Execute_Lock\Context $context ) {
-		if ( ITSEC_Lib::is_ip_whitelisted( ITSEC_Lib::get_ip() ) ) {
+		if (
+			ITSEC_Lib_IP_Detector::is_configured() &&
+			ITSEC_Lib::is_ip_whitelisted( ITSEC_Lib::get_ip() )
+		) {
 			return;
 		}
 
@@ -1479,7 +1486,7 @@ SQL,
 			esc_html__( 'Site Lockout Notification', 'better-wp-security' ),
 			esc_html__( 'Site Lockout Notification', 'better-wp-security' ),
 			false,
-			sprintf( esc_html__( '%s lockout notification', 'better-wp-security'), $mail->get_display_url() ),
+			sprintf( esc_html__( '%s lockout notification', 'better-wp-security' ), $mail->get_display_url() ),
 		);
 		$mail->add_lockouts_table( $lockouts );
 

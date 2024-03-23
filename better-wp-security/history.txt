@@ -1072,3 +1072,8 @@
 	Bug Fix: Some firewall rules could not be deactivated.
 	Bug Fix: Allow opting in to Telemetry via the Settings Page.
 	Bug Fix: PHP 8.2 deprecation warnings.
+9.3.2 - 2024-03-22 - Timothy Jacobs, Lisa Canini, Jared Hill
+	Important: "Automatic (Insecure)" IP detection has been removed. Read more: https://go.solidwp.com/firewall-features-not-available
+	Enhancement: Allow generating a new Two-Factor TOTP secret from the WP-Login UI.
+	Bug Fix: The SolidWP logo appeared too large in some email clients.
+	Bug Fix: An error would occur if we could not determine the length of database columns while saving log items.

@@ -200,9 +200,9 @@ __( 'The number of days file logs should be kept. File logs will be rotated once
 __( 'Path to Log Files', 'better-wp-security' );
 __( 'This folder must be writable. For security reasons, we recommend you do not save logs in your website\'s root folder.', 'better-wp-security' );
 __( 'Proxy Detection', 'better-wp-security' );
-__( 'Determine how Solid Security identifies your visitor’s IP addresses. Choose the Security Check Scan to allow Solid Security to accurately identify malicious IPs attacking your website.', 'better-wp-security' );
+__( 'Configure the method Solid Security uses to identify the IP address of your site’s visitors and users. Choose “Security Check Scan” to allow Solid Security to automatically configure the correct method. When this setting is configured incorrectly, key firewall features will not work properly.<br>[Read more about IP Detection](https://go.solidwp.com/about-ip-detection).', 'better-wp-security' );
 __( 'Proxy Header', 'better-wp-security' );
-__( 'Select the header your proxy server uses to forward the client IP address. If you don’t know the header, you can contact your hosting provider or select the header that shows your true IP address.', 'better-wp-security' );
+__( 'Select the HTTP header record used by your proxy server or load balancer to forward the IP address of each site visitor. Contact your hosting provider or proxy service provider (Cloudflare, etc.) to determine the correct setting. When configured correctly, the “Detected IP” shown above should match your current IP address.', 'better-wp-security' );
 __( 'Hide Security Menu in Admin Bar', 'better-wp-security' );
 __( 'Remove the Security Messages Menu from the Admin Bar. Notifications will only appear on the Solid Security dashboard and settings pages.', 'better-wp-security' );
 __( 'Allow Data Sharing', 'better-wp-security' );

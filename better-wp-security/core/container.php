@@ -138,10 +138,6 @@ return static function ( Container $c ) {
 		return new REST\Geolocation_Controller();
 	};
 
-	$c[ REST\Trusted_Devices_Controller::class ] = static function () {
-		return new REST\Trusted_Devices_Controller();
-	};
-
 	$c[ Rest\Lockouts_Controller::class ] = static function ( Container $c ) {
 		return new Rest\Lockouts_Controller(
 			$c[ \ITSEC_Lockout::class ]

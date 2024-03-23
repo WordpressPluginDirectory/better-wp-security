@@ -372,7 +372,6 @@ class ComposerStaticInit30f4a1a7f1523625c670c10bf8b5f4ec
         'iThemesSecurity\\Lib\\REST\\Settings_Controller' => __DIR__ . '/../..' . '/core/lib/rest/Settings_Controller.php',
         'iThemesSecurity\\Lib\\REST\\Site_Types_Controller' => __DIR__ . '/../..' . '/core/lib/rest/Site_Types_Controller.php',
         'iThemesSecurity\\Lib\\REST\\Tools_Controller' => __DIR__ . '/../..' . '/core/lib/rest/Tools_Controller.php',
-        'iThemesSecurity\\Lib\\REST\\Trusted_Devices_Controller' => __DIR__ . '/../..' . '/core/lib/rest/Trusted_Devices_Controller.php',
         'iThemesSecurity\\Lib\\REST\\User_Actions_Controller' => __DIR__ . '/../..' . '/core/lib/rest/User_Actions_Controller.php',
         'iThemesSecurity\\Lib\\REST\\Users_Controller_Extension' => __DIR__ . '/../..' . '/core/lib/rest/Users_Controller_Extension.php',
         'iThemesSecurity\\Lib\\Result' => __DIR__ . '/../..' . '/core/lib/Result.php',

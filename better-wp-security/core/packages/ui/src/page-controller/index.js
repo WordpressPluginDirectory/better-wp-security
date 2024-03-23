@@ -1,18 +1,22 @@
 /**
+ * External dependencies
+ */
+import styled from '@emotion/styled';
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { SVG, Circle } from '@wordpress/primitives';
+import { Flex } from '@wordpress/components';
 
 /**
  * SolidWP dependencies
  */
 import { Button } from '@ithemes/ui';
 
-/**
- * Internal dependencies
- */
-import { StyledFlexContainer } from '../../styles';
+const StyledFlexContainer = styled( Flex )`
+	margin-top: 2.5rem;
+`;
 
 const PageControlIcon = () => (
 	<SVG width="8" height="8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +24,7 @@ const PageControlIcon = () => (
 	</SVG>
 );
 
-export default function PageControl( { currentPage, numberOfPages, setCurrentPage, onClose } ) {
+export default function PageControl( { currentPage, numberOfPages, setCurrentPage, onClose, allowNavigation = true } ) {
 	const next = ( ) => {
 		setCurrentPage( currentPage + 1 );
 	};
@@ -32,11 +36,14 @@ export default function PageControl( { currentPage, numberOfPages, setCurrentPag
 			gap="2.5rem"
 			align="center"
 		>
-			{ currentPage < numberOfPages - 1 && (
-				<Button variant="primary" onClick={ next } text={ __( 'Next', 'better-wp-security' ) } />
-			) }
-			{ currentPage === numberOfPages - 1 && (
-				<Button variant="primary" onClick={ onClose } text={ __( 'Done', 'better-wp-security' ) } />
+			{ allowNavigation && (
+				currentPage < numberOfPages - 1
+					? (
+						<Button variant="primary" onClick={ next } text={ __( 'Next', 'better-wp-security' ) } />
+					)
+					: (
+						<Button variant="primary" onClick={ onClose } text={ __( 'Done', 'better-wp-security' ) } />
+					)
 			) }
 
 			<ul
@@ -54,12 +61,13 @@ export default function PageControl( { currentPage, numberOfPages, setCurrentPag
 							key={ page }
 							icon={ <PageControlIcon /> }
 							aria-label={ sprintf(
-							/* translators: 1: current page number 2: total number of pages */
+								/* translators: 1: current page number 2: total number of pages */
 								__( 'Page %1$d of %2$d', 'better-wp-security' ),
 								page + 1,
 								numberOfPages
 							) }
 							onClick={ () => setCurrentPage( page ) }
+							disabled={ ! allowNavigation }
 						/>
 					</li>
 				) ) }

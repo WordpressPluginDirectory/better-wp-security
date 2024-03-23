@@ -11,6 +11,10 @@ class ITSEC_Core_Admin implements Runnable {
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 9999 );
 		add_action( 'admin_footer', array( $this, 'render_notices_root' ) );
 
+		if ( ! ITSEC_Lib_IP_Detector::is_configured() && ITSEC_Core::current_user_can_manage() ) {
+			add_action( 'admin_notices', [ $this, 'add_ip_detection_notice' ] );
+		}
+
 		if ( ! ITSEC_Core::is_pro() ) {
 			add_filter( 'itsec_meta_links', array( $this, 'add_plugin_meta_links' ) );
 		}
@@ -24,8 +28,6 @@ class ITSEC_Core_Admin implements Runnable {
 			wp_enqueue_script( 'itsec-core-admin-notices' );
 			wp_enqueue_style( 'itsec-core-admin-notices' );
 		}
-
-		global $pagenow;
 	}
 
 	public function enqueue_dashboard_notices_integration() {
@@ -38,6 +40,25 @@ class ITSEC_Core_Admin implements Runnable {
 		if ( $this->should_render_admin_notices() ) {
 			echo '<div id="itsec-admin-notices-root"></div>';
 		}
+	}
+
+	public function add_ip_detection_notice() {
+		if ( str_starts_with( get_current_screen()->base, 'security_page_itsec' ) ) {
+			return;
+		}
+
+		$url = ITSEC_Core::get_url_for_settings_route( '/settings/global#proxy' );
+		$img = plugins_url( '/core/packages/style-guide/src/assets/purple_shield.svg', ITSEC_Core::get_plugin_file() );
+
+		$text = esc_html__( 'Important: Some Solid Security features are disabled because IP Detection has not been configured.', 'better-wp-security' );
+		$text .= sprintf( ' <a href="%s">%s</a>', esc_url( $url ), esc_html__( 'Configure Now', 'better-wp-security' ) );
+
+		printf(
+			'<div class="notice notice-error"><p style="display: flex; align-items: center; gap: 8px;"><img src="%s" alt="%s" height="40" width="40"><span>%s</span></p></div>',
+			$img,
+			__( 'Solid Security Logo', 'better-wp-security' ),
+			$text
+		);
 	}
 
 	/**

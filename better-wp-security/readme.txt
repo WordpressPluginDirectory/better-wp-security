@@ -2,8 +2,8 @@
 Contributors: ithemes, timothyblynjacobs, jthillithemes, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.3
-Tested up to: 6.4
-Stable tag: 9.3.1
+Tested up to: 6.5
+Stable tag: 9.3.2
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -174,6 +174,12 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.3.2 =
+* Important: "Automatic (Insecure)" IP detection has been removed. Read more: https://go.solidwp.com/firewall-features-not-available
+* Enhancement: Allow generating a new Two-Factor TOTP secret from the WP-Login UI.
+* Bug Fix: The SolidWP logo appeared too large in some email clients.
+* Bug Fix: An error would occur if we could not determine the length of database columns while saving log items.
 
 = 9.3.1 =
 * Tweak: Add a notice when a user's role is demoted from the Site Scans page.

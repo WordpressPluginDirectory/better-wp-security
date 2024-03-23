@@ -302,7 +302,6 @@ return array(
     'iThemesSecurity\\Lib\\REST\\Settings_Controller' => $baseDir . '/core/lib/rest/Settings_Controller.php',
     'iThemesSecurity\\Lib\\REST\\Site_Types_Controller' => $baseDir . '/core/lib/rest/Site_Types_Controller.php',
     'iThemesSecurity\\Lib\\REST\\Tools_Controller' => $baseDir . '/core/lib/rest/Tools_Controller.php',
-    'iThemesSecurity\\Lib\\REST\\Trusted_Devices_Controller' => $baseDir . '/core/lib/rest/Trusted_Devices_Controller.php',
     'iThemesSecurity\\Lib\\REST\\User_Actions_Controller' => $baseDir . '/core/lib/rest/User_Actions_Controller.php',
     'iThemesSecurity\\Lib\\REST\\Users_Controller_Extension' => $baseDir . '/core/lib/rest/Users_Controller_Extension.php',
     'iThemesSecurity\\Lib\\Result' => $baseDir . '/core/lib/Result.php',

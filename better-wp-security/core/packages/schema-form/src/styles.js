@@ -34,7 +34,7 @@ export const StyledSchemaForm = styled( SchemaForm )`
 			grid-column: label;
 			font-size: 1rem;
 			padding-right: 1rem;
-			margin-bottom: 0;
+			margin-top: 0;
 
 			&:not(:first-child) {
 				border-top: 1px solid ${ ( { theme } ) => theme.colors.border.normal };
