@@ -47,6 +47,10 @@ class ITSEC_Core_Admin implements Runnable {
 			return;
 		}
 
+		if ( ! ITSEC_Core::is_onboarded() ) {
+			return;
+		}
+
 		$url = ITSEC_Core::get_url_for_settings_route( '/settings/global#proxy' );
 		$img = plugins_url( '/core/packages/style-guide/src/assets/purple_shield.svg', ITSEC_Core::get_plugin_file() );
 

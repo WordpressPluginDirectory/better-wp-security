@@ -1077,3 +1077,8 @@
 	Enhancement: Allow generating a new Two-Factor TOTP secret from the WP-Login UI.
 	Bug Fix: The SolidWP logo appeared too large in some email clients.
 	Bug Fix: An error would occur if we could not determine the length of database columns while saving log items.
+9.3.3 - 2024-06-19 - Tiomthy Jacobs, Lisa Canini, Jared Hill
+	Enhancement: Improve highlighting settings search results.
+	Bug Fix: Crash during the onboarding process when starting over in some paths.
+	Bug Fix: Checkbox styling issue on WordPress 6.6.
+	Bug Fix: Fire an action when a vulnerability is unresolved due to plugin activation.

@@ -2586,6 +2586,13 @@ final class ITSEC_Lib {
 			}
 		}
 
+		/**
+		 * Fires when a requirements error is encountered.
+		 *
+		 * @param WP_Error $error
+		 */
+		do_action( 'itsec_requirements_error', $error );
+
 		return $error;
 	}
 

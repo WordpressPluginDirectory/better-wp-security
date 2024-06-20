@@ -44,10 +44,10 @@
     array (
       0 => '1269.js',
     ),
-    'hash' => 'f50a3f178f10c0395f817e75151d786c',
+    'hash' => '9d9bc0a621443d6ebb5076aeea82f43f',
     'contentHash' => 
     array (
-      'javascript' => '03f498f22babcfcf10ca',
+      'javascript' => '42ce906e4cf3b516b117',
     ),
     'vendors' => 
     array (
@@ -272,10 +272,10 @@
     array (
       0 => '5896.js',
     ),
-    'hash' => '7768758824b55705ebd1cf6cc6d6103a',
+    'hash' => '32050be76a4b5088319bdc7e6824821c',
     'contentHash' => 
     array (
-      'javascript' => '6556ad7d8d74ab2f12f4',
+      'javascript' => '44482d7f669ddc44d6cd',
     ),
     'vendors' => 
     array (
@@ -291,10 +291,10 @@
     array (
       0 => '6179.js',
     ),
-    'hash' => '0166b2a45184effc5dd1d7b5deb7d631',
+    'hash' => 'e47b9beaa123907f168b761e626c5b82',
     'contentHash' => 
     array (
-      'javascript' => 'c2462d3acbcee6ebf710',
+      'javascript' => '053826ebb15f466fcdcd',
     ),
     'vendors' => 
     array (
@@ -348,10 +348,10 @@
     array (
       0 => '7959.js',
     ),
-    'hash' => '5ab98afd651b868680f94413c5bca7d8',
+    'hash' => '63de81bfecab3267ad1a67e4857dc4a1',
     'contentHash' => 
     array (
-      'javascript' => '9d07afa4f07ec1b02d0e',
+      'javascript' => 'c9b4dd4fb92ef260fec8',
     ),
     'vendors' => 
     array (
@@ -387,11 +387,11 @@
       0 => 'backup/dashboard.css',
       1 => 'backup/dashboard.js',
     ),
-    'hash' => '9d6621e1429940c3805ef4ce007e33e2',
+    'hash' => 'a43ffd61176f83ff2a2736ab760d3a2a',
     'contentHash' => 
     array (
       'css/mini-extract' => 'dfca3e09e747c9271eb0',
-      'javascript' => '6861f17289b5fa4dd210',
+      'javascript' => 'bfe0baf21ead7063b5ac',
     ),
     'vendors' => 
     array (
@@ -426,11 +426,11 @@
       0 => 'core/active-lockouts.css',
       1 => 'core/active-lockouts.js',
     ),
-    'hash' => 'e844bc55a47a8c60f2666f30277e438c',
+    'hash' => '5c91cec8e20175e1b58d74ce91cda82e',
     'contentHash' => 
     array (
       'css/mini-extract' => '26580eb2f5c90c6a6426',
-      'javascript' => '020cf0522dfa2102b3c5',
+      'javascript' => 'e902b92efb85fbc8909f',
     ),
     'vendors' => 
     array (
@@ -546,11 +546,11 @@
       0 => 'core/admin-notices-dashboard-admin-bar.css',
       1 => 'core/admin-notices-dashboard-admin-bar.js',
     ),
-    'hash' => '3bc9febbefb7349d8f1126d3955efc3f',
+    'hash' => 'ffae2cba1da8e76a0edb942e1ed8d68d',
     'contentHash' => 
     array (
       'css/mini-extract' => '52a91e2c720b1913d898',
-      'javascript' => '5157f8279106ac04529f',
+      'javascript' => '8e877ad7f30bb1211be8',
     ),
     'vendors' => 
     array (
@@ -592,11 +592,11 @@
       0 => 'core/ban-hosts.css',
       1 => 'core/ban-hosts.js',
     ),
-    'hash' => '5fa36d7d2e43312a2ba13eaa1b617d44',
+    'hash' => '384f8635ef6e9ed3ae438b151d8e0189',
     'contentHash' => 
     array (
       'css/mini-extract' => '9618f4dac97d024fd3c3',
-      'javascript' => 'c0ab91a2ac48e4cd9c89',
+      'javascript' => 'ce6c94a5657257a35932',
     ),
     'vendors' => 
     array (
@@ -640,10 +640,10 @@
     array (
       0 => 'core/dashboard.js',
     ),
-    'hash' => 'd5f1da78120a9e002f325f50c172b360',
+    'hash' => '20df86a0b1323c26f0dfadbba6992338',
     'contentHash' => 
     array (
-      'javascript' => 'c637f89402991e3d41d0',
+      'javascript' => 'baf359bd5a6ba40ac594',
     ),
     'vendors' => 
     array (
@@ -678,11 +678,11 @@
       0 => 'core/global.css',
       1 => 'core/global.js',
     ),
-    'hash' => '5361eeebc9fcd485bf42ee3be93f85d5',
+    'hash' => '7cb555d19b52abc616da8f71d178e1e1',
     'contentHash' => 
     array (
       'css/mini-extract' => '52a91e2c720b1913d898',
-      'javascript' => '9de86d881f3adca6d186',
+      'javascript' => 'ee9e7ea51bdd275d03a7',
     ),
     'vendors' => 
     array (
@@ -842,10 +842,10 @@
     array (
       0 => 'dashboard/api.js',
     ),
-    'hash' => 'e272e13d5b240c00f8ad810def603d10',
+    'hash' => 'ca347d829a550f477eeb9ed856bf5c24',
     'contentHash' => 
     array (
-      'javascript' => 'ad96b84a9c2bb40e2d36',
+      'javascript' => 'a1fc0e28e7278323ea10',
     ),
     'vendors' => 
     array (
@@ -874,11 +874,11 @@
       0 => 'dashboard/dashboard.css',
       1 => 'dashboard/dashboard.js',
     ),
-    'hash' => 'c97363954af30c81fc8f277aae8126f9',
+    'hash' => '8caebbe076b8349692d6c32fb6751f6c',
     'contentHash' => 
     array (
       'css/mini-extract' => 'a6430b38532bdb963b3d',
-      'javascript' => '54ec43fc2ab43fc3ceeb',
+      'javascript' => '3c6fc1156e9313dc5d8a',
     ),
     'vendors' => 
     array (
@@ -928,11 +928,11 @@
       0 => 'file-permissions/tools.css',
       1 => 'file-permissions/tools.js',
     ),
-    'hash' => '837ed38ff6a3ca2d4714f51052215f8b',
+    'hash' => 'f17c6d4ee9c56cb718b71a4c9e6e722c',
     'contentHash' => 
     array (
       'css/mini-extract' => '63e8888735e846e5451c',
-      'javascript' => '26f103293e3a14d0d566',
+      'javascript' => '727519998521ed97a9cb',
     ),
     'vendors' => 
     array (
@@ -964,10 +964,10 @@
     array (
       0 => 'file-writing/tools.js',
     ),
-    'hash' => '82d44a2de77cae802caea6b83884bf4c',
+    'hash' => '62b95ef26c542ff61c6938cb4b4a90ab',
     'contentHash' => 
     array (
-      'javascript' => '9ea751bef9bc87ed56fd',
+      'javascript' => 'dd4562e35550c9553385',
     ),
     'vendors' => 
     array (
@@ -1102,11 +1102,11 @@
       0 => 'notification-center/settings.css',
       1 => 'notification-center/settings.js',
     ),
-    'hash' => '8160dbe30186b00269b1398bfac2fbe9',
+    'hash' => 'ba51e2d0934e1c34164e6c2b65bbb200',
     'contentHash' => 
     array (
       'css/mini-extract' => '0ff08025c4f34c66fcc0',
-      'javascript' => '2d3d938c0e103915fc98',
+      'javascript' => '242a8b0eb2b861275868',
     ),
     'vendors' => 
     array (
@@ -1201,11 +1201,11 @@
       0 => 'pages/firewall.css',
       1 => 'pages/firewall.js',
     ),
-    'hash' => 'a34e479e448824f2cbf1550a420dbd29',
+    'hash' => '7df5bd084d291a114ededa2ceec5cb2a',
     'contentHash' => 
     array (
       'css/mini-extract' => '00b83afd37380f2e5328',
-      'javascript' => '4eb60399ec5bb2905793',
+      'javascript' => 'a06594dcdefa92fc84eb',
     ),
     'vendors' => 
     array (
@@ -1255,10 +1255,10 @@
     array (
       0 => 'pages/go-pro.js',
     ),
-    'hash' => 'fb9521a5dba18d94085fff18bdfab738',
+    'hash' => 'c7c89683607d558685255fd1f78d2d86',
     'contentHash' => 
     array (
-      'javascript' => '6a415c103d86d1a6f39d',
+      'javascript' => '7e556a34e911ed9e9760',
     ),
     'vendors' => 
     array (
@@ -1287,10 +1287,10 @@
     array (
       0 => 'pages/profile.js',
     ),
-    'hash' => '04cfeb238a7257c09735ba6c106c3026',
+    'hash' => 'd36bb1463204de958cccf3742085f3b5',
     'contentHash' => 
     array (
-      'javascript' => '9cfb33900a39e98ce42f',
+      'javascript' => '38cc0629e17a699d7ecb',
     ),
     'vendors' => 
     array (
@@ -1324,11 +1324,11 @@
       0 => 'pages/settings.css',
       1 => 'pages/settings.js',
     ),
-    'hash' => 'cdd771f3a1089529e1e779ec0364fd02',
+    'hash' => 'c0edcf5c7055d439a58299ad349f5e64',
     'contentHash' => 
     array (
       'css/mini-extract' => 'e2b726cfbd6dfeb76735',
-      'javascript' => '07560a4ba403db3f3bdd',
+      'javascript' => '1e799f66376b30cf4aa0',
     ),
     'vendors' => 
     array (
@@ -1378,11 +1378,11 @@
       0 => 'pages/site-scan.css',
       1 => 'pages/site-scan.js',
     ),
-    'hash' => '0ddde18ec83307a090ad13cc80c45bdf',
+    'hash' => 'f029986e87219d9b520f79acc96c8447',
     'contentHash' => 
     array (
       'css/mini-extract' => '737a55276c950c0404b5',
-      'javascript' => '4e129be63c0f32c701c6',
+      'javascript' => '6a6ee1aea56be9a4e9cf',
     ),
     'vendors' => 
     array (
@@ -1426,11 +1426,11 @@
       0 => 'pages/tools.css',
       1 => 'pages/tools.js',
     ),
-    'hash' => '109e97c72f62caacf368373ceeb93d6c',
+    'hash' => 'b822be1ab004d52ab0564a6e68fa5630',
     'contentHash' => 
     array (
       'css/mini-extract' => '335a58bbdde0c3e82846',
-      'javascript' => '2bae34288008cf6dc103',
+      'javascript' => '1a0317f223082e3c766a',
     ),
     'vendors' => 
     array (
@@ -1478,11 +1478,11 @@
       0 => 'pages/user-security.css',
       1 => 'pages/user-security.js',
     ),
-    'hash' => '519b876587492e309126e896afe00c9c',
+    'hash' => '8c378d8a7dda1435adbbce275d3c039b',
     'contentHash' => 
     array (
       'css/mini-extract' => 'ad99482cd8a93cd4457c',
-      'javascript' => 'a91793c0064867f9bcf7',
+      'javascript' => 'dc31b75c5d67d4f8a434',
     ),
     'vendors' => 
     array (
@@ -1529,11 +1529,11 @@
       0 => 'pages/vulnerabilities.css',
       1 => 'pages/vulnerabilities.js',
     ),
-    'hash' => 'b300abc93032d8f20529d5555271b74c',
+    'hash' => '8550131d2b249d0bb76fe09906e81e6c',
     'contentHash' => 
     array (
       'css/mini-extract' => 'c7567da4117b02d48596',
-      'javascript' => 'b6affc18fa0622a87ce5',
+      'javascript' => '72ffe0c04dda87b25b43',
     ),
     'vendors' => 
     array (
@@ -1593,6 +1593,39 @@
       2 => 'wp-plugins',
     ),
   ),
+  'promos/components' => 
+  array (
+    'runtime' => false,
+    'files' => 
+    array (
+      0 => 'promos/components.js',
+    ),
+    'hash' => 'e6d105f24cff1f13c2b706ea4c897594',
+    'contentHash' => 
+    array (
+      'javascript' => '940e764e804d850829e4',
+    ),
+    'vendors' => 
+    array (
+      0 => 'promos/components',
+      1 => '1930',
+    ),
+    'dependencies' => 
+    array (
+      0 => '@ithemes/security.packages.data',
+      1 => 'lodash',
+      2 => 'react',
+      3 => 'wp-components',
+      4 => 'wp-compose',
+      5 => 'wp-data',
+      6 => 'wp-date',
+      7 => 'wp-element',
+      8 => 'wp-i18n',
+      9 => 'wp-keycodes',
+      10 => 'wp-primitives',
+      11 => 'wp-url',
+    ),
+  ),
   'promos/dashboard' => 
   array (
     'runtime' => false,
@@ -1600,10 +1633,10 @@
     array (
       0 => 'promos/dashboard.js',
     ),
-    'hash' => '06c1697f82f794a47303ade55b10ea2a',
+    'hash' => '703955362e094082c4fdc4c02cb15b38',
     'contentHash' => 
     array (
-      'javascript' => '3fd2468f95736e91b4aa',
+      'javascript' => 'b035bb830b20b7eb3a66',
     ),
     'vendors' => 
     array (
@@ -1613,9 +1646,10 @@
     array (
       0 => '@ithemes/security.dashboard.api',
       1 => '@ithemes/security.dashboard.dashboard',
-      2 => 'wp-element',
-      3 => 'wp-i18n',
-      4 => 'wp-plugins',
+      2 => '@ithemes/security.promos.components',
+      3 => 'wp-element',
+      4 => 'wp-i18n',
+      5 => 'wp-plugins',
     ),
   ),
   'promos/firewall' => 
@@ -1625,10 +1659,10 @@
     array (
       0 => 'promos/firewall.js',
     ),
-    'hash' => 'ac8d9fda408d7799c303b5866ac92896',
+    'hash' => '3d04932c0521076fdd34343d8510fbf6',
     'contentHash' => 
     array (
-      'javascript' => '6554d553f8732e6ed794',
+      'javascript' => '44acbb60bd2934df9c78',
     ),
     'vendors' => 
     array (
@@ -1687,10 +1721,10 @@
     array (
       0 => 'promos/vulnerabilities.js',
     ),
-    'hash' => '8eb5201d679cc4c0fd3830c0b100b37e',
+    'hash' => '6683fa5ca8b53290278a37dd23412a62',
     'contentHash' => 
     array (
-      'javascript' => '4608780293d596345f45',
+      'javascript' => '11942de985cde9946adb',
     ),
     'vendors' => 
     array (
@@ -1741,11 +1775,11 @@
       0 => 'site-scanner/dashboard.css',
       1 => 'site-scanner/dashboard.js',
     ),
-    'hash' => 'a07e5efb6cadc78c691405877a50d8ca',
+    'hash' => 'e25a8b8557f6e679e991514e73ae3fce',
     'contentHash' => 
     array (
       'css/mini-extract' => 'a11d82644a0817f9c5d9',
-      'javascript' => '52e67b85939404fe3da2',
+      'javascript' => '34c17a2c01b929fbb2ff',
     ),
     'vendors' => 
     array (
@@ -1860,10 +1894,10 @@
     array (
       0 => 'two-factor/profile.js',
     ),
-    'hash' => 'f8a7c60779b8c17e58ce32a4f9689563',
+    'hash' => '097a93fe64a31fa624a6e39a9aa4eb2e',
     'contentHash' => 
     array (
-      'javascript' => 'a33faf67ca8095b70da1',
+      'javascript' => '9c23f032876ef887e2e9',
     ),
     'vendors' => 
     array (
@@ -1994,11 +2028,11 @@
       0 => 'user-groups/settings.css',
       1 => 'user-groups/settings.js',
     ),
-    'hash' => '7872983d14cd8a424a3b0aa3173dd1f7',
+    'hash' => '006ddf2312514053535e51328f60b495',
     'contentHash' => 
     array (
       'css/mini-extract' => '92b46f4d9cdc303290e5',
-      'javascript' => '89bf05d9b47b2ddc81ef',
+      'javascript' => '7df403ae9e4370e1e3b3',
     ),
     'vendors' => 
     array (
@@ -2048,11 +2082,11 @@
       0 => 'user-groups/ui.css',
       1 => 'user-groups/ui.js',
     ),
-    'hash' => 'c2520c31e67ab5e8e7d45d7256cdd9db',
+    'hash' => 'dfafbfbb775a3d8dd0040f2860ba2762',
     'contentHash' => 
     array (
       'css/mini-extract' => '706920eb666b310b2f7b',
-      'javascript' => '90413edb7bd128687692',
+      'javascript' => '86f52083c293149ed7ad',
     ),
     'vendors' => 
     array (
@@ -2085,10 +2119,10 @@
     array (
       0 => 'user-groups/user-security.js',
     ),
-    'hash' => '91575bc957a6beb944489c222585f55a',
+    'hash' => 'bdf7c85525f349583e4a40965a85c7f2',
     'contentHash' => 
     array (
-      'javascript' => '2b7effe1dd371da2f4b3',
+      'javascript' => '19b9b2240bd2693e89af',
     ),
     'vendors' => 
     array (

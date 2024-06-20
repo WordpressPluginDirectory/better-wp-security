@@ -59,6 +59,13 @@ export const StyledSchemaForm = styled( SchemaForm )`
 			grid-column: fields;
 		}
 
+		& > .itsec-rjsf-section-title:has(+ .itsec-highlighted-search-result) {
+			border-left: 5px solid ${ ( { theme } ) => theme.colors.border.info };
+			background: #f9f7fd;
+			margin-bottom: 0;
+			padding-top: 1rem !important;
+		}
+
 		& > .field-object {
 			grid-column: label / fields-end;
 		}
@@ -94,6 +101,10 @@ export const StyledSchemaForm = styled( SchemaForm )`
 	}
 
 	.itsec-highlighted-search-result {
+		background: #f9f7fd;
+		padding-bottom: 1rem;
+		padding-top: 1rem !important;
+		
 		.components-base-control__label,
 		.components-input-control__label,
 		label,

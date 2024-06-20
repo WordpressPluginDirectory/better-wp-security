@@ -106,7 +106,7 @@ ITSEC_Lib_Admin_Notices::register(
 				}
 
 				public function show_for_context( ITSEC_Admin_Notice_Context $context ) {
-					return 'automatic' === ITSEC_Modules::get_setting( 'global', 'proxy' );
+					return 'automatic' === ITSEC_Modules::get_setting( 'global', 'proxy' ) && ITSEC_Core::is_onboarded();
 				}
 
 				public function get_actions() {
