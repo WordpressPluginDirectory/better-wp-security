@@ -1,12 +1,14 @@
 === Solid Security – Password, Two Factor Authentication, and Brute Force Protection ===
-Contributors: ithemes, timothyblynjacobs, jthillithemes, lisacee, solidwp
+Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
-Requires at least: 6.3
-Tested up to: 6.6
-Stable tag: 9.3.3
+Requires at least: 6.5
+Tested up to: 6.7
+Stable tag: 9.3.4
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Harden your site security with Login Security, Two-Factor Authentication (2FA), Vulnerability Scanner, Firewall, and more. Formerly iThemes Security.
 
 == License ==
 Released under the terms of the GNU General Public License.
@@ -174,6 +176,13 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.3.4 =
+* Important: Solid Security now requires WordPress 6.5 or later.
+* Tweak: Add a new `solid_security_mail_site_logo` filter to modify the Site Logo used in email notifications.
+* Bug Fix: PHP fatal error on shutdown due to missing Event class on some sites.
+* Bug Fix: PHP warning on Site Health page.
+* Bug Fix: PHP warning in the SSL module on some server setups.
 
 = 9.3.3 =
 * Enhancement: Improve highlighting settings search results.

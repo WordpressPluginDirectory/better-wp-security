@@ -140,6 +140,12 @@ final class Site_Types_Controller extends \WP_REST_Controller {
 			if ( is_wp_error( $answered ) ) {
 				return $answered;
 			}
+
+			do_action( 'stellarwp/telemetry/ithemes-security/event', 'onboard-question', [
+				'type'     => $request['id'],
+				'question' => $latest['question'],
+				'answer'   => $latest['answer'],
+			] );
 		}
 
 		return $controller;

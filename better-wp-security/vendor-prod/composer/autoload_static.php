@@ -401,6 +401,7 @@ class ComposerStaticInit30f4a1a7f1523625c670c10bf8b5f4ec
         'iThemesSecurity\\Lib\\Site_Types\\Type\\Non_Profit' => __DIR__ . '/../..' . '/core/lib/site-types/Type/Non_Profit.php',
         'iThemesSecurity\\Lib\\Site_Types\\Type\\Portfolio' => __DIR__ . '/../..' . '/core/lib/site-types/Type/Portfolio.php',
         'iThemesSecurity\\Lib\\Stellar_Container' => __DIR__ . '/../..' . '/core/lib/Stellar_Container.php',
+        'iThemesSecurity\\Lib\\Stringable_Json' => __DIR__ . '/../..' . '/core/lib/Stringable_Json.php',
         'iThemesSecurity\\Lib\\Tools\\Config_Tool' => __DIR__ . '/../..' . '/core/lib/tools/Config_Tool.php',
         'iThemesSecurity\\Lib\\Tools\\Tool' => __DIR__ . '/../..' . '/core/lib/tools/Tool.php',
         'iThemesSecurity\\Lib\\Tools\\Tools_Registry' => __DIR__ . '/../..' . '/core/lib/tools/Tools_Registry.php',

@@ -1077,8 +1077,14 @@
 	Enhancement: Allow generating a new Two-Factor TOTP secret from the WP-Login UI.
 	Bug Fix: The SolidWP logo appeared too large in some email clients.
 	Bug Fix: An error would occur if we could not determine the length of database columns while saving log items.
-9.3.3 - 2024-06-19 - Tiomthy Jacobs, Lisa Canini, Jared Hill
+9.3.3 - 2024-06-19 - Timothy Jacobs, Lisa Canini, Jared Hill
 	Enhancement: Improve highlighting settings search results.
 	Bug Fix: Crash during the onboarding process when starting over in some paths.
 	Bug Fix: Checkbox styling issue on WordPress 6.6.
 	Bug Fix: Fire an action when a vulnerability is unresolved due to plugin activation.
+9.3.4 - 2024-11-11 - Timothy Jacobs
+	Important: Solid Security now requires WordPress 6.5 or later.
+	Tweak: Add a new `solid_security_mail_site_logo` filter to modify the Site Logo used in email notifications.
+	Bug Fix: PHP fatal error on shutdown due to missing Event class on some sites.
+	Bug Fix: PHP warning on Site Health page.
+	Bug Fix: PHP warning in the SSL module on some server setups.

@@ -64,7 +64,7 @@ class ITSEC_SSL {
 			add_filter( 'script_loader_src', array( $this, 'script_loader_src' ) );
 			add_filter( 'style_loader_src', array( $this, 'style_loader_src' ) );
 			add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
-		} elseif ( 'cli' !== php_sapi_name() && ! ITSEC_Core::doing_data_upgrade() && 'GET' === $_SERVER['REQUEST_METHOD'] ) {
+		} elseif ( 'cli' !== php_sapi_name() && ! ITSEC_Core::doing_data_upgrade() && isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' === $_SERVER['REQUEST_METHOD'] ) {
 			$this->redirect_to_https();
 		}
 	}

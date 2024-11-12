@@ -331,6 +331,7 @@ return array(
     'iThemesSecurity\\Lib\\Site_Types\\Type\\Non_Profit' => $baseDir . '/core/lib/site-types/Type/Non_Profit.php',
     'iThemesSecurity\\Lib\\Site_Types\\Type\\Portfolio' => $baseDir . '/core/lib/site-types/Type/Portfolio.php',
     'iThemesSecurity\\Lib\\Stellar_Container' => $baseDir . '/core/lib/Stellar_Container.php',
+    'iThemesSecurity\\Lib\\Stringable_Json' => $baseDir . '/core/lib/Stringable_Json.php',
     'iThemesSecurity\\Lib\\Tools\\Config_Tool' => $baseDir . '/core/lib/tools/Config_Tool.php',
     'iThemesSecurity\\Lib\\Tools\\Tool' => $baseDir . '/core/lib/tools/Tool.php',
     'iThemesSecurity\\Lib\\Tools\\Tools_Registry' => $baseDir . '/core/lib/tools/Tools_Registry.php',
