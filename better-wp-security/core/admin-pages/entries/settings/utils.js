@@ -14,6 +14,7 @@ import {
 	createInterpolateElement,
 	useCallback,
 	useContext,
+	useMemo,
 } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
@@ -313,4 +314,54 @@ export function appendClassNameAtPath( object, path, className ) {
 	set( object, path, classnames( get( object, path ), className ) );
 
 	return object;
+}
+
+export function useHighlightedVulnerabilities( issues, count ) {
+	const getSeverity = ( score ) => {
+		if ( score < 3 ) {
+			return 'low';
+		}
+		if ( score < 7 ) {
+			return 'medium';
+		}
+		if ( score < 9 ) {
+			return 'high';
+		}
+		return 'critical';
+	};
+
+	return useMemo( () => {
+		const grouped = {};
+
+		for ( const issue of issues ) {
+			const key = `${ issue.software.type.slug }:${ issue.software.slug }`;
+
+			if ( ! grouped[ key ] ) {
+				grouped[ key ] = {
+					software: issue.software,
+					critical: 0,
+					high: 0,
+					medium: 0,
+					low: 0,
+					maxScore: 0,
+				};
+			}
+
+			grouped[ key ][ getSeverity( issue.details.score ) ]++;
+
+			if ( issue.details.score > grouped[ key ].maxScore ) {
+				grouped[ key ].maxScore = issue.details.score;
+			}
+		}
+
+		const sorted = Object.values( grouped );
+		sorted.sort( ( a, b ) => b.maxScore - a.maxScore );
+		const show = sorted.slice( 0, count );
+		const remaining = sorted.slice( count ).reduce( ( acc, software ) => acc + software.critical + software.high + software.medium + software.low, 0 );
+
+		return {
+			show,
+			remaining,
+		};
+	}, [ issues, count ] );
 }

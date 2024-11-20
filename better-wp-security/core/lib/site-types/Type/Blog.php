@@ -26,7 +26,7 @@ final class Blog implements Site_Type {
 
 	public function get_questions(): array {
 		return array_merge(
-			( new Global_Question_Pack() )->get_questions(),
+			( new Global_Question_Pack( $this ) )->get_questions(),
 			( new Client_Question_Pack() )->get_questions(),
 			( new Login_Security_Question_Pack( $this ) )->get_questions()
 		);

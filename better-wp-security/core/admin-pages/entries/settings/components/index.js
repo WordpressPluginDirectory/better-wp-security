@@ -12,3 +12,5 @@ export { default as OnboardProgress } from './onboard-progress';
 export { default as ModuleCard } from './module-card';
 export { default as StatusToggleSettings } from './status-toggle-settings';
 export { default as ModuleFormInputs } from './module-form-inputs';
+export { default as SiteScanIcon } from './site-scan-icon';
+export { default as SoftwareVulnerabilityCard } from './software-vulnerability-card';

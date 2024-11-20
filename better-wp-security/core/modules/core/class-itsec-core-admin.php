@@ -191,7 +191,7 @@ class ITSEC_Core_Admin implements Runnable {
 		/* translators: 1. The user's name. */
 		return sprintf(
 			esc_html__(
-				'Hi %s/ SolidWP is dedicated to delivering top-notch services, and your input helps us deliver on that promise.
+				'Hi %s, SolidWP is dedicated to delivering top-notch services, and your input helps us deliver on that promise.
 				 By opting into our feedback program, you help enhance the Solid Security experience for yourself and all of our users.
 				 When you opt in, you allow us to access certain data related to how you use our products, which we use responsibly to tailor our products to your needs.
 				 You will additionally receive updates, important product and marketing information, and exclusive offers via email. You may unsubscribe at any time.

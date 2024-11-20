@@ -27,7 +27,7 @@ class Firewall implements Runnable {
 			$runnable->run();
 		} );
 
-		add_filter( 'itsec_lockout_modules', [ $this, 'register_module' ] );
+		add_filter( 'itsec_lockout_modules', [ $this, 'register_module' ], 10, 2 );
 		add_filter( 'debug_information', [ $this, 'add_site_health_info' ] );
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -76,11 +76,11 @@ class Firewall implements Runnable {
 		return $info;
 	}
 
-	public function register_module( $modules ) {
+	public function register_module( $modules, $translate ) {
 		$modules['firewall'] = [
 			'type'   => 'firewall',
-			'reason' => __( 'Triggered too many firewall rules', 'better-wp-security' ),
-			'label'  => __( 'Firewall Rule', 'better-wp-security' ),
+			'reason' => $translate ? __( 'Triggered too many firewall rules', 'better-wp-security' ) : 'Triggered too many firewall rules',
+			'label'  => $translate ? __( 'Firewall Rule', 'better-wp-security' ) : 'Firewall Rule',
 			'host'   => \ITSEC_Modules::get_setting( 'firewall', 'max_attempts_host' ),
 			'period' => \ITSEC_Modules::get_setting( 'firewall', 'check_period' ),
 		];

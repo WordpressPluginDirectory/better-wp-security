@@ -6,7 +6,7 @@
  * Description: Shield your site from cyberattacks and prevent security vulnerabilities. The only security plugin you need for a solid foundation.
  * Author: SolidWP
  * Author URI: https://solidwp.com
- * Version: 9.3.4
+ * Version: 9.3.5
  * Text Domain: better-wp-security
  * Network: True
  * License: GPLv2
@@ -33,16 +33,6 @@ if ( version_compare( $GLOBALS['wp_version'], '6.5', '<' ) ) {
 
 	return;
 }
-
-function itsec_load_textdomain() {
-	$locale = determine_locale();
-	$locale = apply_filters( 'plugin_locale', $locale, 'better-wp-security' );
-
-	load_textdomain( 'better-wp-security', WP_LANG_DIR . "/plugins/better-wp-security/better-wp-security-$locale.mo" );
-	load_plugin_textdomain( 'better-wp-security' );
-}
-
-add_action( 'plugins_loaded', 'itsec_load_textdomain' );
 
 if ( isset( $itsec_dir ) || class_exists( 'ITSEC_Core' ) ) {
 	include( dirname( __FILE__ ) . '/core/show-multiple-version-notice.php' );

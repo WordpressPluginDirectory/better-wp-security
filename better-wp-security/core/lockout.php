@@ -89,12 +89,13 @@ final class ITSEC_Lockout {
 			$this->register_modules();
 			$this->check_for_host_lockouts();
 		} else {
+			add_action( 'plugins_loaded', array( $this, 'register_modules' ) );
 			// Check for host lockouts
 			add_action( 'init', array( $this, 'check_for_host_lockouts' ) );
 		}
 
-		// Register all plugin modules
-		add_action( 'plugins_loaded', array( $this, 'register_modules' ) );
+		// Re-register all plugin modules when translations are available.
+		add_action( 'after_setup_theme', array( $this, 'register_modules' ), 1 );
 
 		// Ensure that locked out users are prevented from checking logins.
 		add_filter( 'authenticate', array( $this, 'check_authenticate_lockout' ), 30 );
@@ -1298,6 +1299,8 @@ SQL,
 	 */
 	public function register_modules() {
 
+		$translate = doing_action( 'after_setup_theme' ) || did_action( 'after_setup_theme' );
+
 		/**
 		 * Filter the available lockout modules.
 		 *
@@ -1308,8 +1311,9 @@ SQL,
 		 *                               should be permanently banned. Additionally, the 'user' and 'host' options instruct
 		 *                               security to wait for that many temporary lockout events to occur before executing
 		 *                               the lockout.
+		 * @param array $translate       Whether to load translations.
 		 */
-		$this->lockout_modules = apply_filters( 'itsec_lockout_modules', $this->lockout_modules );
+		$this->lockout_modules = apply_filters( 'itsec_lockout_modules', $this->lockout_modules, $translate );
 	}
 
 	/**

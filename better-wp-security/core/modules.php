@@ -1007,7 +1007,7 @@ final class ITSEC_Modules implements Import_Export_Source {
 			$check['ip'] = true;
 		}
 
-		return ITSEC_Lib::evaluate_requirements( $check );
+		return ITSEC_Lib::evaluate_requirements( $check, $mode === 'activate' );
 	}
 
 	public function get_export_slug(): string {
