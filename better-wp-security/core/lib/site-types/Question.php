@@ -5,6 +5,9 @@ namespace iThemesSecurity\Lib\Site_Types;
 interface Question {
 
 	const SCAN_SITE = 'scan-site';
+	const FIREWALL = 'firewall';
+	const TWO_FACTOR = 'two-factor';
+	const PASSWORD_REQUIREMENTS = 'password-requirements';
 	const IS_CLIENT = 'is-client';
 	const SELECT_CLIENTS = 'select-clients';
 	const SELECT_SITE_ADMINS = 'select-site-admins';

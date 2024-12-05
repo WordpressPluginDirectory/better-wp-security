@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 6.7
-Stable tag: 9.3.5
+Stable tag: 9.3.6
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -176,6 +176,9 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.3.6 =
+* Enhancement: Better surface Login Security features during onboarding.
 
 = 9.3.5 =
 * Bug Fix: PHP warning about translations being loaded too early.

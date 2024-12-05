@@ -314,6 +314,7 @@ return array(
     'iThemesSecurity\\Lib\\Site_Types\\Question\\End_Users_Question_Pack' => $baseDir . '/core/lib/site-types/Question/End_Users_Question_Pack.php',
     'iThemesSecurity\\Lib\\Site_Types\\Question\\Global_Question_Pack' => $baseDir . '/core/lib/site-types/Question/Global_Question_Pack.php',
     'iThemesSecurity\\Lib\\Site_Types\\Question\\Login_Security_Question_Pack' => $baseDir . '/core/lib/site-types/Question/Login_Security_Question_Pack.php',
+    'iThemesSecurity\\Lib\\Site_Types\\Question\\Site_Scan_Question' => $baseDir . '/core/lib/site-types/Question/Site_Scan_Question.php',
     'iThemesSecurity\\Lib\\Site_Types\\Questions_Provider' => $baseDir . '/core/lib/site-types/Questions_Provider.php',
     'iThemesSecurity\\Lib\\Site_Types\\Registry' => $baseDir . '/core/lib/site-types/Registry.php',
     'iThemesSecurity\\Lib\\Site_Types\\Responds' => $baseDir . '/core/lib/site-types/Responds.php',

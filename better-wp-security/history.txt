@@ -1090,3 +1090,5 @@
 	Bug Fix: PHP warning in the SSL module on some server setups.
 9.3.5 - 2024-11-19 - Timothy Jacobs
 	Bug Fix: PHP warning about translations being loaded too early.
+9.3.6 - 2024-12-04 - Timothy Jacobs
+	Enhancement: Better surface Login Security features during onboarding.

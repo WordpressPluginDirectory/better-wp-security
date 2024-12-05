@@ -384,6 +384,7 @@ class ComposerStaticInit30f4a1a7f1523625c670c10bf8b5f4ec
         'iThemesSecurity\\Lib\\Site_Types\\Question\\End_Users_Question_Pack' => __DIR__ . '/../..' . '/core/lib/site-types/Question/End_Users_Question_Pack.php',
         'iThemesSecurity\\Lib\\Site_Types\\Question\\Global_Question_Pack' => __DIR__ . '/../..' . '/core/lib/site-types/Question/Global_Question_Pack.php',
         'iThemesSecurity\\Lib\\Site_Types\\Question\\Login_Security_Question_Pack' => __DIR__ . '/../..' . '/core/lib/site-types/Question/Login_Security_Question_Pack.php',
+        'iThemesSecurity\\Lib\\Site_Types\\Question\\Site_Scan_Question' => __DIR__ . '/../..' . '/core/lib/site-types/Question/Site_Scan_Question.php',
         'iThemesSecurity\\Lib\\Site_Types\\Questions_Provider' => __DIR__ . '/../..' . '/core/lib/site-types/Questions_Provider.php',
         'iThemesSecurity\\Lib\\Site_Types\\Registry' => __DIR__ . '/../..' . '/core/lib/site-types/Registry.php',
         'iThemesSecurity\\Lib\\Site_Types\\Responds' => __DIR__ . '/../..' . '/core/lib/site-types/Responds.php',

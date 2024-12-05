@@ -24,8 +24,7 @@
     "manage_group": {
       "type": "multiple",
       "title": "Manage Solid Security",
-      "description": "Allow users to manage Solid Security.",
-      "default": "administrator"
+      "description": "Allow users to manage Solid Security."
     }
   },
   "settings": {

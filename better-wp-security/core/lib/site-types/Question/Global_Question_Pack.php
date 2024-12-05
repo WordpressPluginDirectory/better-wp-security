@@ -13,33 +13,8 @@ use iThemesSecurity\Lib\Site_Types\Templating_Site_Type;
 
 final class Global_Question_Pack implements Questions_Provider {
 
-	/** @var Site_Type|null */
-	private $site_type;
-
-	public function __construct( Site_Type $site_type = null ) { $this->site_type = $site_type; }
-
 	public function get_questions(): array {
 		$questions = [];
-
-		$questions[] = new class( $this->site_type instanceof Templating_Site_Type ? $this->site_type : null ) extends Templated_Question {
-			public function get_id(): string {
-				return self::SCAN_SITE;
-			}
-
-			protected function get_prompt_fallback(): string {
-				return __( 'Before we configure Solid Security, let’s scan your site for vulnerabilities…', 'better-wp-security' );
-			}
-
-			public function get_description(): string {
-				return __( 'Scanning your website helps you better understand your security situation. Having more context around your site’s security is helpful to know for your initial setup.', 'better-wp-security' );
-			}
-
-			public function get_answer_schema(): array {
-				return [
-					'type' => ['boolean', 'integer'],
-				];
-			}
-		};
 
 		if ( ! \ITSEC_Modules::is_active( 'security-check-pro' ) ) {
 			$questions[] = new class implements Question, Responds {

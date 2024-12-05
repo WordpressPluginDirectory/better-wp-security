@@ -114,6 +114,21 @@ export function* applyAnswerResponse() {
 			}
 		}
 
+		for ( const module of answer.disabled ) {
+			const config = modules.find( ( { id } ) => id === module );
+
+			if ( config?.side_effects ) {
+				yield controls.dispatch( MODULES_STORE_NAME, 'deactivateModule', module );
+				yield controls.dispatch( STORE_NAME, 'fetchSiteTypes' );
+			} else {
+				yield controls.dispatch( MODULES_STORE_NAME, 'editModule', module, {
+					status: {
+						selected: 'inactive',
+					},
+				} );
+			}
+		}
+
 		for ( const module in answer.settings ) {
 			if ( answer.settings.hasOwnProperty( module ) ) {
 				yield controls.dispatch(

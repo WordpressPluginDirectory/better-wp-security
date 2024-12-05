@@ -4,13 +4,12 @@ namespace iThemesSecurity\Lib\Site_Types\Type;
 
 use iThemesSecurity\Exception\Invalid_Argument_Exception;
 use iThemesSecurity\Lib\Site_Types\Question\Client_Question_Pack;
-use iThemesSecurity\Lib\Site_Types\Question\End_Users_Question_Pack;
-use iThemesSecurity\Lib\Site_Types\Has_End_Users;
 use iThemesSecurity\Lib\Site_Types\Question;
 use iThemesSecurity\Lib\Site_Types\Question\Global_Question_Pack;
+use iThemesSecurity\Lib\Site_Types\Question\Site_Scan_Question;
 use iThemesSecurity\Lib\Site_Types\Templating_Site_Type;
 
-final class Non_Profit implements Templating_Site_Type, Has_End_Users {
+final class Non_Profit implements Templating_Site_Type {
 	const TEMPLATES = [
 		Question::SCAN_SITE,
 		Question::SELECT_END_USERS,
@@ -36,15 +35,11 @@ final class Non_Profit implements Templating_Site_Type, Has_End_Users {
 
 	public function get_questions(): array {
 		return array_merge(
-			( new Global_Question_Pack( $this ) )->get_questions(),
+			[ new Site_Scan_Question( $this ) ],
+			( new Question\Login_Security_Question_Pack() )->get_questions(),
 			( new Client_Question_Pack() )->get_questions(),
-			( new End_Users_Question_Pack( $this ) )->get_questions(),
-			( new Question\Login_Security_Question_Pack( $this ) )->get_questions()
+			( new Global_Question_Pack() )->get_questions(),
 		);
-	}
-
-	public function get_end_users_group_label(): string {
-		return __( 'Donors', 'better-wp-security' );
 	}
 
 	public function is_supported_question( string $question_id ): bool {
