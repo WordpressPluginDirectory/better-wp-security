@@ -4,8 +4,8 @@
   "version": "5.6.0",
   "author": "iThemes",
   "engines": {
-    "npm": "^8",
-    "node": "^16"
+    "npm": "^10",
+    "node": "^20"
   },
   "browserslist": [
     "extends @wordpress/browserslist-config"
@@ -43,7 +43,7 @@
     "@wordpress/rich-text": "^6.12.0",
     "@wordpress/url": "^3.36.0",
     "@wordpress/viewport": "^5.12.0",
-    "ajv": "^6.12.6",
+    "ajv": "^8.17.1",
     "classnames": "^2.3.1",
     "contrast": "^1.0.1",
     "date-fns": "^2.30.0",
@@ -97,7 +97,7 @@
     "@wordpress/prettier-config": "^2.18.0",
     "@wordpress/scripts": "^26.6.0",
     "acorn": "^6.4.2",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.4.16",
     "babel-loader": "^8.2.2",
     "concurrently": "^6.0.2",
     "copy-webpack-plugin": "^11.0.0",
@@ -110,8 +110,8 @@
     "loader-utils": "^1.4.0",
     "mini-css-extract-plugin": "^2.6.1",
     "path": "^0.12.7",
-    "postcss-loader": "^3.0.0",
-    "readdirp": "^2.2.1",
+    "postcss-loader": "^7.3.4",
+    "readdirp": "^3.6.0",
     "rimraf": "^2.7.1",
     "sass": "^1.49.9",
     "sass-loader": "^13.0.2",

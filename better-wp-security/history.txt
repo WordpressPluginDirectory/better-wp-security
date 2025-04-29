@@ -1095,3 +1095,6 @@
 9.3.7 - 2025-03-24 - Timothy Jacobs, Zach Tirrell
 	Enhancement: Use block API Version 3 for the Security Profile block.
 	Bug Fix: PHP warning when HTTP_HOST not set.
+9.3.8 - 2025-04-28 - Timothy Jacobs
+	Tweak: Delete older JS files that were causing false-positives on scans. They have not been used since the UI was rewritten in React.
+	Security: Update StellarWP Telemetry library to improve authorization checks.

@@ -159,7 +159,9 @@ module.exports = function makeConfig( directory, pro ) {
 						{
 							loader: 'postcss-loader',
 							options: {
-								plugins: [ autoprefixer ],
+								postcssOptions: {
+									plugins: [ autoprefixer ],
+								},
 							},
 						},
 						{

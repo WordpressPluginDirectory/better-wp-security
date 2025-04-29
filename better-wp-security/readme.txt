@@ -3,7 +3,7 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 6.8
-Stable tag: 9.3.7
+Stable tag: 9.3.8
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -176,6 +176,10 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.3.8 =
+* Tweak: Delete older JS files that were causing false-positives on scans. They have not been used since the UI was rewritten in React.
+* Security: Update StellarWP Telemetry library to improve authorization checks.
 
 = 9.3.7 =
 * Enhancement: Use block API Version 3 for the Security Profile block.

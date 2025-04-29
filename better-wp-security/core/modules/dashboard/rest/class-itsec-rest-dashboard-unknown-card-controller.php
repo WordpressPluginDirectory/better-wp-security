@@ -127,7 +127,7 @@ class ITSEC_REST_Dashboard_Unknown_Card_Controller extends ITSEC_REST_Dashboard_
 	 */
 	public function get_item_schema() {
 		return array(
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => 'ithemes-security-dashboard-card-unknown',
 			'type'       => 'object',
 			'properties' => array(

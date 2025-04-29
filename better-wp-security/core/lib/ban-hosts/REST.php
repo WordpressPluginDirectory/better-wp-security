@@ -414,7 +414,7 @@ class REST extends \WP_REST_Controller {
 		}
 
 		$schema = [
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => 'ithemes-security-ban',
 			'type'       => 'object',
 			'properties' => [

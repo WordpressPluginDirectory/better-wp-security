@@ -75,7 +75,7 @@ class ITSEC_REST_Actor_Types_Controller extends WP_REST_Controller {
 		}
 
 		$this->schema = [
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'type'       => 'object',
 			'properties' => [
 				'slug'  => [

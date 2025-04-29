@@ -96,9 +96,6 @@ export const PrimarySchemaFormInputs = forwardRef( ( { className, ...rest }, ref
 			{ ...rest }
 			ref={ ref }
 			className={ className }
-			additionalMetaSchemas={ [
-				require( 'ajv/lib/refs/json-schema-draft-04.json' ),
-			] }
 		>
 			<></>
 		</StyledSchemaForm>

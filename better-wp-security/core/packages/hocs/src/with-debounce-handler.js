@@ -17,7 +17,7 @@ import { createHigherOrderComponent } from '@wordpress/compose';
  * @param {string}          handlerName
  * @param {number|Function} wait
  * @param {Object}          [options]
- * @return {WPComponent} Debounced component.
+ * @return {import('@wordpress/element').Component} Debounced component.
  */
 export default function withDebounceHandler( handlerName, wait, options = {} ) {
 	return createHigherOrderComponent( ( WrappedComponent ) => {

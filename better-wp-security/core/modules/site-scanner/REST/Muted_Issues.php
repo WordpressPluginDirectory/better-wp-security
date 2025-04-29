@@ -203,7 +203,7 @@ class Muted_Issues extends \WP_REST_Controller {
 	public function get_item_schema() {
 		if ( ! $this->schema ) {
 			$this->schema = [
-				'$schema'    => 'http://json-schema.org/draft-04/schema#',
+				'$schema'    => 'http://json-schema.org/draft-07/schema#',
 				'type'       => 'object',
 				'properties' => [
 					'id'       => [

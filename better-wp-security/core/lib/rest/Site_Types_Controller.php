@@ -215,7 +215,7 @@ final class Site_Types_Controller extends \WP_REST_Controller {
 		if ( ! $this->schema ) {
 			$this->schema = [
 				'title'      => 'ithemes-security-site-type',
-				'$schema'    => 'http://json-schema.org/draft-04/schema#',
+				'$schema'    => 'http://json-schema.org/draft-07/schema#',
 				'type'       => 'object',
 				'properties' => [
 					'id'            => [

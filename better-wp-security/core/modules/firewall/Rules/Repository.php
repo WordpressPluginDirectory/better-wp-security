@@ -235,7 +235,13 @@ class Repository implements Loader {
 		[ $where, $prepare ] = $this->build_where_clause( $options );
 		$sql .= $where;
 
-		$count = $this->wpdb->get_var( $this->wpdb->prepare( $sql, $prepare ) );
+		if ( $prepare ) {
+			$execute = $this->wpdb->prepare( $sql, $prepare );
+		} else {
+			$execute = $sql;
+		}
+
+		$count = $this->wpdb->get_var( $execute );
 
 		if ( $this->wpdb->last_error ) {
 			return Result::error( new \WP_Error(

@@ -16,6 +16,17 @@
  * @extends Ithemes_Ithemes_Security_ProWP_Async_Request
  */
 abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes_Ithemes_Security_ProWP_Async_Request {
+	/**
+	 * The default query arg name used for passing the chain ID to new processes.
+	 */
+	const CHAIN_ID_ARG_NAME = 'chain_id';
+
+	/**
+	 * Unique background process chain ID.
+	 *
+	 * @var string
+	 */
+	private $chain_id;
 
 	/**
 	 * Action
@@ -54,6 +65,13 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	protected $cron_interval_identifier;
 
 	/**
+	 * Restrict object instantiation when using unserialize.
+	 *
+	 * @var bool|array
+	 */
+	protected $allowed_batch_data_classes = true;
+
+	/**
 	 * The status set when process is cancelling.
 	 *
 	 * @var int
@@ -69,15 +87,34 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 
 	/**
 	 * Initiate new background process.
+	 *
+	 * @param bool|array $allowed_batch_data_classes Optional. Array of class names that can be unserialized. Default true (any class).
 	 */
-	public function __construct() {
+	public function __construct( $allowed_batch_data_classes = true ) {
 		parent::__construct();
+
+		if ( empty( $allowed_batch_data_classes ) && false !== $allowed_batch_data_classes ) {
+			$allowed_batch_data_classes = true;
+		}
+
+		if ( ! is_bool( $allowed_batch_data_classes ) && ! is_array( $allowed_batch_data_classes ) ) {
+			$allowed_batch_data_classes = true;
+		}
+
+		// If allowed_batch_data_classes property set in subclass,
+		// only apply override if not allowing any class.
+		if ( true === $this->allowed_batch_data_classes || true !== $allowed_batch_data_classes ) {
+			$this->allowed_batch_data_classes = $allowed_batch_data_classes;
+		}
 
 		$this->cron_hook_identifier     = $this->identifier . '_cron';
 		$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
 		add_action( $this->cron_hook_identifier, array( $this, 'handle_cron_healthcheck' ) );
 		add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) );
+
+		// Ensure dispatch query args included extra data.
+		add_filter( $this->identifier . '_query_args', array( $this, 'filter_dispatch_query_args' ) );
 	}
 
 	/**
@@ -89,6 +126,18 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	public function dispatch() {
 		if ( $this->is_processing() ) {
 			// Process already running.
+			return false;
+		}
+
+		/**
+		 * Filter fired before background process dispatches its next process.
+		 *
+		 * @param bool   $cancel   Should the dispatch be cancelled? Default false.
+		 * @param string $chain_id The background process chain ID.
+		 */
+		$cancel = apply_filters( $this->identifier . '_pre_dispatch', false, $this->get_chain_id() );
+
+		if ( $cancel ) {
 			return false;
 		}
 
@@ -192,20 +241,14 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * @return bool
 	 */
 	public function is_cancelled() {
-		$status = get_site_option( $this->get_status_key(), 0 );
-
-		if ( absint( $status ) === self::STATUS_CANCELLED ) {
-			return true;
-		}
-
-		return false;
+		return $this->get_status() === self::STATUS_CANCELLED;
 	}
 
 	/**
 	 * Called when background process has been cancelled.
 	 */
 	protected function cancelled() {
-		do_action( $this->identifier . '_cancelled' );
+		do_action( $this->identifier . '_cancelled', $this->get_chain_id() );
 	}
 
 	/**
@@ -216,25 +259,19 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	}
 
 	/**
-	 * Is the job paused?
+	 * Has the process been paused?
 	 *
 	 * @return bool
 	 */
 	public function is_paused() {
-		$status = get_site_option( $this->get_status_key(), 0 );
-
-		if ( absint( $status ) === self::STATUS_PAUSED ) {
-			return true;
-		}
-
-		return false;
+		return $this->get_status() === self::STATUS_PAUSED;
 	}
 
 	/**
 	 * Called when background process has been paused.
 	 */
 	protected function paused() {
-		do_action( $this->identifier . '_paused' );
+		do_action( $this->identifier . '_paused', $this->get_chain_id() );
 	}
 
 	/**
@@ -252,7 +289,7 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * Called when background process has been resumed.
 	 */
 	protected function resumed() {
-		do_action( $this->identifier . '_resumed' );
+		do_action( $this->identifier . '_resumed', $this->get_chain_id() );
 	}
 
 	/**
@@ -301,6 +338,34 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	}
 
 	/**
+	 * Get the status value for the process.
+	 *
+	 * @return int
+	 */
+	protected function get_status() {
+		global $wpdb;
+
+		if ( is_multisite() ) {
+			$status = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT meta_value FROM $wpdb->sitemeta WHERE meta_key = %s AND site_id = %d LIMIT 1",
+					$this->get_status_key(),
+					get_current_network_id()
+				)
+			);
+		} else {
+			$status = $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1",
+					$this->get_status_key()
+				)
+			);
+		}
+
+		return absint( $status );
+	}
+
+	/**
 	 * Maybe process a batch of queued items.
 	 *
 	 * Checks whether data exists within the queue and that
@@ -310,11 +375,14 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 		// Don't lock up other requests while processing.
 		session_write_close();
 
+		check_ajax_referer( $this->identifier, 'nonce' );
+
+		// Background process already running.
 		if ( $this->is_processing() ) {
-			// Background process already running.
 			return $this->maybe_wp_die();
 		}
 
+		// Cancel requested.
 		if ( $this->is_cancelled() ) {
 			$this->clear_scheduled_event();
 			$this->delete_all();
@@ -322,6 +390,7 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 			return $this->maybe_wp_die();
 		}
 
+		// Pause requested.
 		if ( $this->is_paused() ) {
 			$this->clear_scheduled_event();
 			$this->paused();
@@ -329,12 +398,10 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 			return $this->maybe_wp_die();
 		}
 
+		// No data to process.
 		if ( $this->is_queue_empty() ) {
-			// No data to process.
 			return $this->maybe_wp_die();
 		}
-
-		check_ajax_referer( $this->identifier, 'nonce' );
 
 		$this->handle();
 
@@ -385,14 +452,38 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * Lock the process so that multiple instances can't run simultaneously.
 	 * Override if applicable, but the duration should be greater than that
 	 * defined in the time_exceeded() method.
+	 *
+	 * @param bool $reset_start_time Optional, default true.
 	 */
-	protected function lock_process() {
-		$this->start_time = time(); // Set start time of current process.
+	public function lock_process( $reset_start_time = true ) {
+		if ( $reset_start_time ) {
+			$this->start_time = time(); // Set start time of current process.
+		}
 
 		$lock_duration = ( property_exists( $this, 'queue_lock_time' ) ) ? $this->queue_lock_time : 60; // 1 minute
 		$lock_duration = apply_filters( $this->identifier . '_queue_lock_time', $lock_duration );
 
-		set_site_transient( $this->identifier . '_process_lock', microtime(), $lock_duration );
+		$microtime = microtime();
+		$locked    = set_site_transient( $this->identifier . '_process_lock', $microtime, $lock_duration );
+
+		/**
+		 * Action to note whether the background process managed to create its lock.
+		 *
+		 * The lock is used to signify that a process is running a task and no other
+		 * process should be allowed to run the same task until the lock is released.
+		 *
+		 * @param bool   $locked        Whether the lock was successfully created.
+		 * @param string $microtime     Microtime string value used for the lock.
+		 * @param int    $lock_duration Max number of seconds that the lock will live for.
+		 * @param string $chain_id      Current background process chain ID.
+		 */
+		do_action(
+			$this->identifier . '_process_locked',
+			$locked,
+			$microtime,
+			$lock_duration,
+			$this->get_chain_id()
+		);
 	}
 
 	/**
@@ -403,7 +494,18 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * @return $this
 	 */
 	protected function unlock_process() {
-		delete_site_transient( $this->identifier . '_process_lock' );
+		$unlocked = delete_site_transient( $this->identifier . '_process_lock' );
+
+		/**
+		 * Action to note whether the background process managed to release its lock.
+		 *
+		 * The lock is used to signify that a process is running a task and no other
+		 * process should be allowed to run the same task until the lock is released.
+		 *
+		 * @param bool   $unlocked Whether the lock was released.
+		 * @param string $chain_id Current background process chain ID.
+		 */
+		do_action( $this->identifier . '_process_unlocked', $unlocked, $this->get_chain_id() );
 
 		return $this;
 	}
@@ -416,7 +518,7 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	protected function get_batch() {
 		return array_reduce(
 			$this->get_batches( 1 ),
-			function ( $carry, $batch ) {
+			static function ( $carry, $batch ) {
 				return $batch;
 			},
 			array()
@@ -466,16 +568,23 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 			$args[] = $limit;
 		}
 
-		$items = $wpdb->get_results( $wpdb->prepare( $sql, $args ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$items = $wpdb->get_results(
+			$wpdb->prepare(
+				$sql, // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$args
+			)
+		);
 
 		$batches = array();
 
 		if ( ! empty( $items ) ) {
+			$allowed_classes = $this->allowed_batch_data_classes;
+
 			$batches = array_map(
-				function ( $item ) use ( $column, $value_column ) {
+				static function ( $item ) use ( $column, $value_column, $allowed_classes ) {
 					$batch       = new stdClass();
 					$batch->key  = $item->{$column};
-					$batch->data = maybe_unserialize( $item->{$value_column} );
+					$batch->data = static::maybe_unserialize( $item->{$value_column}, $allowed_classes );
 
 					return $batch;
 				},
@@ -531,8 +640,8 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 				// Let the server breathe a little.
 				sleep( $throttle_seconds );
 
-				// Batch limits reached, or pause or cancel request.
-				if ( $this->time_exceeded() || $this->memory_exceeded() || $this->is_paused() || $this->is_cancelled() ) {
+				// Batch limits reached, or pause or cancel requested.
+				if ( ! $this->should_continue() ) {
 					break;
 				}
 			}
@@ -541,7 +650,7 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 			if ( empty( $batch->data ) ) {
 				$this->delete( $batch->key );
 			}
-		} while ( ! $this->time_exceeded() && ! $this->memory_exceeded() && ! $this->is_queue_empty() && ! $this->is_paused() && ! $this->is_cancelled() );
+		} while ( ! $this->is_queue_empty() && $this->should_continue() );
 
 		$this->unlock_process();
 
@@ -634,7 +743,26 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * Called when background process has completed.
 	 */
 	protected function completed() {
-		do_action( $this->identifier . '_completed' );
+		do_action( $this->identifier . '_completed', $this->get_chain_id() );
+	}
+
+	/**
+	 * Get the cron healthcheck interval in minutes.
+	 *
+	 * Default is 5 minutes, minimum is 1 minute.
+	 *
+	 * @return int
+	 */
+	public function get_cron_interval() {
+		$interval = 5;
+
+		if ( property_exists( $this, 'cron_interval' ) ) {
+			$interval = $this->cron_interval;
+		}
+
+		$interval = apply_filters( $this->cron_interval_identifier, $interval );
+
+		return is_int( $interval ) && 0 < $interval ? $interval : 5;
 	}
 
 	/**
@@ -647,11 +775,7 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * @return mixed
 	 */
 	public function schedule_cron_healthcheck( $schedules ) {
-		$interval = apply_filters( $this->cron_interval_identifier, 5 );
-
-		if ( property_exists( $this, 'cron_interval' ) ) {
-			$interval = apply_filters( $this->cron_interval_identifier, $this->cron_interval );
-		}
+		$interval = $this->get_cron_interval();
 
 		if ( 1 === $interval ) {
 			$display = __( 'Every Minute' );
@@ -694,7 +818,11 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 */
 	protected function schedule_event() {
 		if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
-			wp_schedule_event( time(), $this->cron_interval_identifier, $this->cron_hook_identifier );
+			wp_schedule_event(
+				time() + ( $this->get_cron_interval() * MINUTE_IN_SECONDS ),
+				$this->cron_interval_identifier,
+				$this->cron_hook_identifier
+			);
 		}
 	}
 
@@ -734,4 +862,141 @@ abstract class Ithemes_Ithemes_Security_ProWP_Background_Process extends Ithemes
 	 * @return mixed
 	 */
 	abstract protected function task( $item );
+
+	/**
+	 * Maybe unserialize data, but not if an object.
+	 *
+	 * @param mixed      $data            Data to be unserialized.
+	 * @param bool|array $allowed_classes Array of class names that can be unserialized.
+	 *
+	 * @return mixed
+	 */
+	protected static function maybe_unserialize( $data, $allowed_classes ) {
+		if ( is_serialized( $data ) ) {
+			$options = array();
+			if ( is_bool( $allowed_classes ) || is_array( $allowed_classes ) ) {
+				$options['allowed_classes'] = $allowed_classes;
+			}
+
+			return @unserialize( $data, $options ); // @phpcs:ignore
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Should any processing continue?
+	 *
+	 * @return bool
+	 */
+	public function should_continue() {
+		/**
+		 * Filter whether the current background process should continue running the task
+		 * if there is data to be processed.
+		 *
+		 * If the processing time or memory limits have been exceeded, the value will be false.
+		 * If pause or cancel have been requested, the value will be false.
+		 *
+		 * It is very unlikely that you would want to override a false value with true.
+		 *
+		 * If false is returned here, it does not necessarily mean background processing is
+		 * complete. If there is batch data still to be processed and pause or cancel have not
+		 * been requested, it simply means this background process should spawn a new process
+		 * for the chain to continue processing and then close itself down.
+		 *
+		 * @param bool   $continue Should the current process continue processing the task?
+		 * @param string $chain_id The current background process chain's ID.
+		 *
+		 * @return bool
+		 */
+		return apply_filters(
+			$this->identifier . '_should_continue',
+			! ( $this->time_exceeded() || $this->memory_exceeded() || $this->is_paused() || $this->is_cancelled() ),
+			$this->get_chain_id()
+		);
+	}
+
+	/**
+	 * Get the string used to identify this type of background process.
+	 *
+	 * @return string
+	 */
+	public function get_identifier() {
+		return $this->identifier;
+	}
+
+	/**
+	 * Return the current background process chain's ID.
+	 *
+	 * If the chain's ID hasn't been set before this function is first used,
+	 * and hasn't been passed as a query arg during dispatch,
+	 * the chain ID will be generated before being returned.
+	 *
+	 * @return string
+	 */
+	public function get_chain_id() {
+		if ( empty( $this->chain_id ) && wp_doing_ajax() ) {
+			check_ajax_referer( $this->identifier, 'nonce' );
+
+			if ( ! empty( $_GET[ $this->get_chain_id_arg_name() ] ) ) {
+				$chain_id = sanitize_key( $_GET[ $this->get_chain_id_arg_name() ] );
+
+				if ( wp_is_uuid( $chain_id ) ) {
+					$this->chain_id = $chain_id;
+
+					return $this->chain_id;
+				}
+			}
+		}
+
+		if ( empty( $this->chain_id ) ) {
+			$this->chain_id = wp_generate_uuid4();
+		}
+
+		return $this->chain_id;
+	}
+
+	/**
+	 * Filters the query arguments used during an async request.
+	 *
+	 * @param array $args Current query args.
+	 *
+	 * @return array
+	 */
+	public function filter_dispatch_query_args( $args ) {
+		$args[ $this->get_chain_id_arg_name() ] = $this->get_chain_id();
+
+		return $args;
+	}
+
+	/**
+	 * Get the query arg name used for passing the chain ID to new processes.
+	 *
+	 * @return string
+	 */
+	private function get_chain_id_arg_name() {
+		static $chain_id_arg_name;
+
+		if ( ! empty( $chain_id_arg_name ) ) {
+			return $chain_id_arg_name;
+		}
+
+		/**
+		 * Filter the query arg name used for passing the chain ID to new processes.
+		 *
+		 * If you encounter problems with using the default query arg name, you can
+		 * change it with this filter.
+		 *
+		 * @param string $chain_id_arg_name Default "chain_id".
+		 *
+		 * @return string
+		 */
+		$chain_id_arg_name = apply_filters( $this->identifier . '_chain_id_arg_name', self::CHAIN_ID_ARG_NAME );
+
+		if ( ! is_string( $chain_id_arg_name ) || empty( $chain_id_arg_name ) ) {
+			$chain_id_arg_name = self::CHAIN_ID_ARG_NAME;
+		}
+
+		return $chain_id_arg_name;
+	}
 }

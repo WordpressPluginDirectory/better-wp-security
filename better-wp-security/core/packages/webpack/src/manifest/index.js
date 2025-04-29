@@ -51,7 +51,7 @@ function generateChunk( chunk ) {
 		runtime: chunk.hasRuntime(),
 		files: [],
 		hash: crypto
-			.createHash( 'md4' )
+			.createHash( 'sha1' )
 			.update( JSON.stringify( chunk.contentHash ) )
 			.digest( 'hex' ),
 		contentHash: chunk.contentHash,

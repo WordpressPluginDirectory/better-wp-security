@@ -502,7 +502,7 @@ class ITSEC_REST_Dashboard_Card_Controller extends ITSEC_REST_Dashboard_Controll
 	 */
 	public function get_item_schema() {
 		$schema = array(
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => "ithemes-security-dashboard-card-{$this->card->get_slug()}",
 			'type'       => 'object',
 			'properties' => array(

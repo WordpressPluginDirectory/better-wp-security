@@ -371,7 +371,7 @@ final class Module_Config {
 
 		if ( isset( $transformed['settings'] ) ) {
 			if ( ! isset( $transformed['settings']['$schema'] ) ) {
-				$transformed['settings']['$schema'] = 'http://json-schema.org/draft-04/schema#';
+				$transformed['settings']['$schema'] = 'http://json-schema.org/draft-07/schema#';
 			}
 
 			if ( ! isset( $transformed['settings']['id'] ) ) {

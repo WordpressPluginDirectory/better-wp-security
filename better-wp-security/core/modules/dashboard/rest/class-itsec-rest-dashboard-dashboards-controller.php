@@ -360,7 +360,7 @@ class ITSEC_REST_Dashboard_Dashboards_Controller extends ITSEC_REST_Dashboard_Co
 		}
 
 		$this->schema = [
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => 'ithemes-security-dashboard',
 			'type'       => 'object',
 			'properties' => [

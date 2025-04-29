@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace iThemesSecurity\Strauss\ZxcvbnPhp\Matchers;
 
-use JetBrains\PhpStorm\ArrayShape;
 use iThemesSecurity\Strauss\ZxcvbnPhp\Matcher;
 
 class ReverseDictionaryMatch extends DictionaryMatch
@@ -48,7 +47,9 @@ class ReverseDictionaryMatch extends DictionaryMatch
         return parent::getRawGuesses() * 2;
     }
 
-    #[ArrayShape(['warning' => 'string', 'suggestions' => 'string[]'])]
+    /**
+     * @return array{'warning': string, "suggestions": string[]}
+     */
     public function getFeedback(bool $isSoleMatch): array
     {
         $feedback = parent::getFeedback($isSoleMatch);
@@ -60,7 +61,7 @@ class ReverseDictionaryMatch extends DictionaryMatch
         return $feedback;
     }
 
-    public static function mbStrRev(string $string, string $encoding = null): string
+    public static function mbStrRev(string $string, ?string $encoding = null): string
     {
         if ($encoding === null) {
             $encoding = mb_detect_encoding($string) ?: 'UTF-8';

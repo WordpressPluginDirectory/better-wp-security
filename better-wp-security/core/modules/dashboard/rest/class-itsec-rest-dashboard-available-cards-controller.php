@@ -107,7 +107,7 @@ class ITSEC_REST_Dashboard_Available_Cards_Controller extends ITSEC_REST_Dashboa
 	 */
 	public function get_item_schema() {
 		return array(
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => 'ithemes-security-dashboard-available-card',
 			'type'       => 'object',
 			'properties' => array(

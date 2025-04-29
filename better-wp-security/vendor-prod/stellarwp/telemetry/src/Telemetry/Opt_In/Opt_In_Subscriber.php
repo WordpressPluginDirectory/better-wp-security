@@ -49,6 +49,7 @@ class Opt_In_Subscriber extends Abstract_Subscriber {
 	 * Sets the opt-in status for the site.
 	 *
 	 * @since 1.0.0
+	 * @since 2.3.4 - Added user capability check.
 	 *
 	 * @return void
 	 */
@@ -65,6 +66,7 @@ class Opt_In_Subscriber extends Abstract_Subscriber {
 			return;
 		}
 
+		// Check sent data before we do any database checks for faster failures.
 		// We're not attempting a telemetry action.
 		if ( isset( $_POST['action'] ) && 'stellarwp-telemetry' !== $_POST['action'] ) {
 			return;
@@ -72,6 +74,11 @@ class Opt_In_Subscriber extends Abstract_Subscriber {
 
 		// The user did not respond to the opt-in modal.
 		if ( ! isset( $_POST['optin-agreed'] ) ) {
+			return;
+		}
+
+		// Sent data validated, check if the user has the necessary permissions.
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 

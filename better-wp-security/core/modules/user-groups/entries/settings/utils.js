@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { filter, intersection, isPlainObject, map, reduce } from 'lodash';
-import Ajv from 'ajv';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -20,17 +19,7 @@ import { STORE_NAME as SEARCH_STORE_NAME } from '@ithemes/security-search';
 import { useSingletonEffect } from '@ithemes/security-hocs';
 import { MODULES_STORE_NAME } from '@ithemes/security.packages.data';
 import { store } from '@ithemes/security.user-groups.api';
-
-function getAjv() {
-	if ( ! getAjv.instance ) {
-		getAjv.instance = new Ajv( { schemaId: 'id' } );
-		getAjv.instance.addMetaSchema(
-			require( 'ajv/lib/refs/json-schema-draft-04.json' )
-		);
-	}
-
-	return getAjv.instance;
-}
+import { getAjv } from '@ithemes/security-utils';
 
 export function useApplyDefaultGroupSettings() {
 	const { resolveSelect } = useRegistry();

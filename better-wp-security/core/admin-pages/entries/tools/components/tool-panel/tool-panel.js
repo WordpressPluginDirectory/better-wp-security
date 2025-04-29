@@ -37,6 +37,7 @@ import {
 } from '@ithemes/ui';
 import { ErrorList } from '@ithemes/security-ui';
 import { PrimarySchemaFormInputs } from '@ithemes/security-schema-form';
+import { getAjv } from '@ithemes/security-utils';
 
 /**
  * Internal dependencies
@@ -53,7 +54,6 @@ import {
 	StyledToolActionContainer,
 	StyledToolActionMessage,
 } from './styles';
-import { getAjv } from '../../utils';
 
 export default function Tools() {
 	const { tools, activeModules, isLoaded } = useSelect( ( select ) => ( {

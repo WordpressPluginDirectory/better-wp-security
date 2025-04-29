@@ -312,7 +312,7 @@ class ITSEC_REST_Dashboard_Layout_Controller extends ITSEC_REST_Dashboard_Contro
 		}
 
 		$schema = array(
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'title'      => 'ithemes-security-dashboard-layout',
 			'type'       => 'object',
 			'properties' => array(

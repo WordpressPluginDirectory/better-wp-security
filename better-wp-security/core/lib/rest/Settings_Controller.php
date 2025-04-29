@@ -233,7 +233,7 @@ final class Settings_Controller extends \WP_REST_Controller {
 	public function get_item_schema() {
 		return [
 			'title'      => 'ithemes-security-settings',
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'type'       => 'object',
 			'properties' => [],
 		];

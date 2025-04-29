@@ -1,24 +1,13 @@
 /**
- * External dependencies
- */
-import Ajv from 'ajv';
-
-/**
  * WordPress dependencies
  */
 import { useSelect } from '@wordpress/data';
+
+/**
+ * Solid dependencies
+ */
 import { store as userGroupsStore } from '@ithemes/security.user-groups.api';
-
-function getAjv() {
-	if ( ! getAjv.instance ) {
-		getAjv.instance = new Ajv( { schemaId: 'id' } );
-		getAjv.instance.addMetaSchema(
-			require( 'ajv/lib/refs/json-schema-draft-04.json' )
-		);
-	}
-
-	return getAjv.instance;
-}
+import { getAjv } from '@ithemes/security-utils';
 
 export function useSettingsDefinitions( filters = {} ) {
 	const ajv = getAjv();

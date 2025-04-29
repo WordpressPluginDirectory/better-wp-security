@@ -246,7 +246,7 @@ final class Modules_Controller extends \WP_REST_Controller {
 
 		$this->schema = [
 			'title'      => 'ithemes-security-module',
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-07/schema#',
 			'type'       => 'object',
 			'properties' => [
 				'id'                    => [

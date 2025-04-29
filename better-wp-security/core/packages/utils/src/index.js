@@ -423,10 +423,7 @@ export function timeSince( date ) {
  */
 export function getAjv() {
 	if ( ! getAjv.instance ) {
-		getAjv.instance = new Ajv( { schemaId: 'id' } );
-		getAjv.instance.addMetaSchema(
-			require( 'ajv/lib/refs/json-schema-draft-04.json' )
-		);
+		getAjv.instance = new Ajv( { strict: false } );
 		getAjv.instance.addFormat( 'html', {
 			type: 'string',
 			validate() {
