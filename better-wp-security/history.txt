@@ -1098,3 +1098,6 @@
 9.3.8 - 2025-04-28 - Timothy Jacobs
 	Tweak: Delete older JS files that were causing false-positives on scans. They have not been used since the UI was rewritten in React.
 	Security: Update StellarWP Telemetry library to improve authorization checks.
+9.3.9 - 2025-07-08 - Timothy Jacobs
+	Tweak: Reduce number of steps in the onboarding sequence.
+	Bug Fix: Notification Center settings could not be properly saved.

@@ -1,3 +1,4 @@
+export { default as SolidLogo } from './logo/solid-wp-logo.svg';
 export { default as LogoProColor } from './logo/pro-color.svg';
 export { default as LogoFreeColor } from './logo/free-color.svg';
 export { default as LogoProWhite } from './logo/pro-white.svg';
@@ -6,6 +7,7 @@ export { default as LogoColor } from './logo/color.svg';
 export { default as LogoColorBasic } from './logo/color-basic.svg';
 export { default as MarkPro } from './logo/pro-mark.svg';
 export { default as LogoProColorAccent } from './logo/pro-white-accent.svg';
+export { default as StellarSitesLogo } from './logo/stellar-sites.svg';
 export { default as Happy } from './happy.svg';
 export { default as Crash } from './crash.svg';
 export { default as NoData } from './no-data.svg';

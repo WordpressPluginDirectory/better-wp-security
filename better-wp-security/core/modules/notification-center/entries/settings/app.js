@@ -47,7 +47,7 @@ export default function App() {
 			title={ __( 'Notifications', 'better-wp-security' ) }
 			icon="email-alt"
 			priority={ 20 }
-			roots={ [ 'onboard', 'import', 'settings' ] }
+			roots={ [ 'import', 'settings' ] }
 			key={ asyncNotifications.status + asyncUsersAndRoles.status }
 		>
 			{ () => (

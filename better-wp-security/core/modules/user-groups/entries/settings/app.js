@@ -24,7 +24,7 @@ export default function App() {
 			title={ __( 'User Groups', 'better-wp-security' ) }
 			icon="groups"
 			priority={ 10 }
-			roots={ [ 'onboard', 'settings', 'import' ] }
+			roots={ [ 'settings', 'import' ] }
 		>
 			{ () => <Layout /> }
 		</Page>

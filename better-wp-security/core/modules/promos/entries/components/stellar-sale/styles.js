@@ -13,6 +13,8 @@ import { Text, Heading } from '@ithemes/ui';
  */
 import { Button } from '@wordpress/components';
 
+import { SolidLogo } from '@ithemes/security-style-guide';
+
 export const StyledStellarSale = styled.aside`
 	position: relative;
 	display: flex;
@@ -34,7 +36,8 @@ export const StyledStellarSaleDismiss = styled( Button )`
 `;
 
 export const StyledStellarSaleContent = styled.div`
-	max-width: 60rem;
+	z-index: 1;
+	max-width: 50rem;
 	display: grid;
 	grid-template-columns: ${ ( { isSmall } ) => isSmall ? '1fr 1fr' : 'auto' };
 	gap: 1rem 1.5rem;
@@ -86,46 +89,12 @@ export const StyledStellarSaleLink = styled( Text )`
 
 export const StyledStellarSaleGraphic = styled( Graphic )`
 	position: absolute;
-	right: 0;
-	bottom: ${ ( { isHuge } ) => isHuge ? '-1rem' : '-2rem' };
+	right: ${ ( { isWide } ) => isWide ? '5rem' : '-2rem' };
+	top: 50%;
+	transform: translateY(-50%);
+	opacity: ${ ( { isWide } ) => isWide ? 1 : 0.40 };
 `;
 
-function Graphic( { className, isHuge } ) {
-	if ( ! isHuge ) {
-		return (
-			<svg
-				className={ className }
-				width="116"
-				height="167"
-				viewBox="0 0 116 167"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<circle cx="9.58348" cy="9.58348" r="9.58348" fill="#F9FAF9" />
-				<path d="M245.378 48.0009L103.543 222.42L9.625 9.66699L245.378 48.0009ZM245.378 48.0009L306.713 126.586" stroke="#F9FAF9" strokeWidth="1.43752" />
-			</svg>
-		);
-	}
-
-	return (
-		<svg
-			className={ className }
-			width="280"
-			height="154"
-			viewBox="0 0 280 154"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<g clipPath="url(#clip0_1482_390)">
-				<circle cx="10.2895" cy="9.58348" r="9.58348" fill="#F9FAF9" />
-				<circle cx="245.085" cy="46.9587" r="4.79174" fill="#F9FAF9" />
-				<path d="M245.085 46.0009L103.249 220.42L9.33105 7.66699L245.085 46.0009ZM245.085 46.0009L306.419 124.586" stroke="#F9FAF9" strokeWidth="1.43752" />
-			</g>
-			<defs>
-				<clipPath id="clip0_1482_390">
-					<rect width="280" height="154" fill="white" />
-				</clipPath>
-			</defs>
-		</svg>
-	);
+function Graphic( { className } ) {
+	return <SolidLogo className={ className } />;
 }

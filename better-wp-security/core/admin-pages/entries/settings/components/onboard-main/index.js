@@ -19,7 +19,7 @@ import { Button } from '@ithemes/ui';
  * Internal dependencies
  */
 import { withNavigate } from '@ithemes/security-hocs';
-import { NoticeList, OnboardProgress } from '../';
+import { NoticeList } from '../';
 import { usePreviousPage } from '../../page-registration';
 import { StyledGraphic, StyledLogo, StyledMain, StyledMainContainer } from './styles';
 
@@ -59,7 +59,6 @@ export default function OnboardMain( { url, render: Component } ) {
 				<NoticeList />
 				<Component />
 			</StyledMain>
-			<OnboardProgress />
 		</StyledMainContainer>
 	);
 }

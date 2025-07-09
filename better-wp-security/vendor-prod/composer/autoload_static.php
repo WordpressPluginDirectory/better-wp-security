@@ -289,6 +289,7 @@ class ComposerStaticInit21d5536de7b0f1825cc8669e43c80018
         'Ithemes_Sync_Verb_ITSEC_Get_Two_Factor_Users' => __DIR__ . '/../..' . '/core/modules/two-factor/sync-verbs/itsec-get-two-factor-users.php',
         'Ithemes_Sync_Verb_ITSEC_Latest_File_Scan' => __DIR__ . '/../..' . '/core/modules/file-change/sync-verbs/itsec-latest-file-scan.php',
         'Ithemes_Sync_Verb_ITSEC_Override_Two_Factor_User' => __DIR__ . '/../..' . '/core/modules/two-factor/sync-verbs/itsec-override-two-factor-user.php',
+        'Test_Batch_Data' => __DIR__ . '/..' . '/deliciousbrains/wp-background-processing/tests/fixtures/Test_Batch_Data.php',
         'Test_Setup' => __DIR__ . '/..' . '/deliciousbrains/wp-background-processing/tests/Test_Setup.php',
         'Test_WP_Background_Process' => __DIR__ . '/..' . '/deliciousbrains/wp-background-processing/tests/Test_WP_Background_Process.php',
         'Two_Factor_Backup_Codes' => __DIR__ . '/../..' . '/core/modules/two-factor/providers/class.two-factor-backup-codes.php',

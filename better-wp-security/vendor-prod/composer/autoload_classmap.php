@@ -219,6 +219,7 @@ return array(
     'Ithemes_Sync_Verb_ITSEC_Get_Two_Factor_Users' => $baseDir . '/core/modules/two-factor/sync-verbs/itsec-get-two-factor-users.php',
     'Ithemes_Sync_Verb_ITSEC_Latest_File_Scan' => $baseDir . '/core/modules/file-change/sync-verbs/itsec-latest-file-scan.php',
     'Ithemes_Sync_Verb_ITSEC_Override_Two_Factor_User' => $baseDir . '/core/modules/two-factor/sync-verbs/itsec-override-two-factor-user.php',
+    'Test_Batch_Data' => $vendorDir . '/deliciousbrains/wp-background-processing/tests/fixtures/Test_Batch_Data.php',
     'Test_Setup' => $vendorDir . '/deliciousbrains/wp-background-processing/tests/Test_Setup.php',
     'Test_WP_Background_Process' => $vendorDir . '/deliciousbrains/wp-background-processing/tests/Test_WP_Background_Process.php',
     'Two_Factor_Backup_Codes' => $baseDir . '/core/modules/two-factor/providers/class.two-factor-backup-codes.php',

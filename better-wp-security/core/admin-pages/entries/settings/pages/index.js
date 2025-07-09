@@ -35,7 +35,7 @@ export default function Pages() {
 				id="configure"
 				title={ __( 'Features', 'better-wp-security' ) }
 				priority={ 6 }
-				roots={ [ 'onboard', 'settings', 'import' ] }
+				roots={ [ 'settings', 'import' ] }
 			>
 				{ () => <TabbedModulesPage exclude={ [ 'advanced' ] } /> }
 			</Page>

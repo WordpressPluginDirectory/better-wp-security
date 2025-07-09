@@ -105,7 +105,7 @@ export const getEditedSettings = createSelector(
 
 export function getEditedSetting( state, module, setting ) {
 	return (
-		state.settingEdits[ module ]?.[ setting ] ||
+		state.settingEdits[ module ]?.[ setting ] ??
 		state.settings[ module ]?.[ setting ]
 	);
 }

@@ -417,6 +417,76 @@ export function timeSince( date ) {
 }
 
 /**
+ * Validates whether a string is a valid email address.
+ *
+ * THis matches the logic from WordPress's is_email() function.
+ *
+ * @param {string} email The email address to validate.
+ * @return {string|false} Returns the email address if valid, false otherwise.
+ */
+export function isEmail( email ) {
+	if ( ! email || typeof email !== 'string' ) {
+		return false;
+	}
+
+	// Test for the minimum length the email can be.
+	if ( email.length < 6 ) {
+		return false;
+	}
+
+	// Test for an @ character after the first position.
+	const atIndex = email.indexOf( '@', 1 );
+	if ( atIndex === -1 ) {
+		return false;
+	}
+
+	// Split out the local and domain parts.
+	// eslint-disable-next-line @wordpress/no-unused-vars-before-return
+	const [ local, domain ] = email.split( '@' );
+
+	// LOCAL PART
+	// Test for invalid characters.
+	if ( ! /^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~\.-]+$/.test( local ) ) {
+		return false;
+	}
+
+	// DOMAIN PART
+	// Test for sequences of periods.
+	if ( /\.{2,}/.test( domain ) ) {
+		return false;
+	}
+
+	// Test for leading and trailing periods and whitespace.
+	if ( domain.trim().replace( /^\.|\.$/g, '' ) !== domain ) {
+		return false;
+	}
+
+	// Split the domain into subs.
+	const subs = domain.split( '.' );
+
+	// Assume the domain will have at least two subs.
+	if ( subs.length < 2 ) {
+		return false;
+	}
+
+	// Loop through each sub.
+	for ( const sub of subs ) {
+		// Test for leading and trailing hyphens and whitespace.
+		if ( sub.trim().replace( /^-|-$/g, '' ) !== sub ) {
+			return false;
+		}
+
+		// Test for invalid characters.
+		if ( ! /^[a-z0-9-]+$/i.test( sub ) ) {
+			return false;
+		}
+	}
+
+	// Congratulations, your email made it!
+	return email;
+}
+
+/**
  * Grabs a global instance of Ajv.
  *
  * @return {Ajv.Ajv} The ajv instance.
@@ -468,6 +538,12 @@ export function getAjv() {
 				}
 
 				return true;
+			},
+		} );
+		getAjv.instance.addFormat( 'email', {
+			type: 'string',
+			validate( value ) {
+				return isEmail( value );
 			},
 		} );
 	}

@@ -200,6 +200,7 @@ export function useCreateDefaultGroups() {
 }
 
 export function useCompletionSteps() {
+	const createDefaultGroups = useCreateDefaultGroups();
 	const { registerCompletionStep } = useDispatch( ONBOARD_STORE_NAME );
 	const { saveGroups, saveGroupSettingsAsBatch } = useDispatch( uiStore );
 
@@ -208,7 +209,8 @@ export function useCompletionSteps() {
 			id: 'savingUserGroups',
 			label: __( 'Create User Groups', 'better-wp-security' ),
 			priority: 15,
-			callback() {
+			async callback() {
+				await createDefaultGroups();
 				return saveGroups();
 			},
 		} );

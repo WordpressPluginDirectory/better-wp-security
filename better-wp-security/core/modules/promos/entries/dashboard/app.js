@@ -22,7 +22,7 @@ import {
 	useConfigContext,
 	PromoCard,
 } from '@ithemes/security.dashboard.dashboard';
-import { StellarSale } from '@ithemes/security.promos.components';
+import { StellarSale, StellarSites } from '@ithemes/security.promos.components';
 import { useLocalStorage } from '@ithemes/security-hocs';
 import { StyledBFCMBanner, StyledBFCMButton, StyledBFCMDismiss, StyledBFCMHeading, StyledBFCMText, StyledBFCMTextContainer, StyledLogo } from './styles';
 
@@ -35,6 +35,7 @@ export default function App() {
 				{ ( { page, dashboardId } ) =>
 					dashboardId > 0 && page === 'view-dashboard' && (
 						<>
+							<StellarSites />
 							<StellarSale installType={ installType } />
 							<BlackFridayCyberMondayBanner installType={ installType } />
 						</>

@@ -26,15 +26,17 @@ import {
 	StyledStellarSaleLink,
 } from './styles';
 
-const start = Date.UTC( 2024, 6, 23, 8, 0, 0 );
-const end = Date.UTC( 2024, 6, 31, 4, 0, 0 );
+// Start on July 29th at midnight.
+const start = Date.UTC( 2025, 6, 29, 4, 0, 0 );
+// End at midnight ET August 5
+const end = Date.UTC( 2025, 7, 6, 4, 0, 0 );
 const now = Date.now();
 
 export default function StellarSale( { installType } ) {
 	const isSmall = useViewportMatch( 'small' );
-	const isHuge = useViewportMatch( 'huge' );
+	const isWide = useViewportMatch( 'wide' );
 	const [ isDismissed, setIsDismiss ] = useLocalStorage(
-		'itsecPromoStellarSale24'
+		'itsecPromoStellarSale25'
 	);
 	const baseTheme = useTheme();
 	const theme = useMemo( () => ( {
@@ -57,14 +59,14 @@ export default function StellarSale( { installType } ) {
 	}
 
 	const subtitle = installType === 'free'
-		? __( 'Save 40% on Solid Security Pro.', 'better-wp-security' )
-		: __( 'Save 40% on Solid Suite.', 'better-wp-security' );
+		? __( 'Save 30% on Solid Security Pro.', 'better-wp-security' )
+		: __( 'Save 30% on Solid Suite.', 'better-wp-security' );
 	const shopNow = installType === 'free'
-		? 'https://go.solidwp.com/stellar-sale-plugin-solid-security-basic'
-		: 'https://go.solidwp.com/stellar-sale-plugin-solid-security-pro';
+		? 'https://go.solidwp.com/stellar-sale-2025-plugin-solid-security-basic'
+		: 'https://go.solidwp.com/stellar-sale-2025-plugin-solid-security-pro';
 	const shopBrands = installType === 'free'
-		? 'https://go.solidwp.com/stellar-sale-plugin-solid-security-basic-stellar-wp'
-		: 'https://go.solidwp.com/stellar-sale-plugin-solid-security-pro-stellar-wp';
+		? 'https://go.solidwp.com/stellar-sale-2025-plugin-solid-security-basic-stellar-wp'
+		: 'https://go.solidwp.com/stellar-sale-2025-plugin-solid-security-pro-stellar-wp';
 
 	return (
 		<ThemeProvider theme={ theme }>
@@ -77,7 +79,7 @@ export default function StellarSale( { installType } ) {
 						size="extraLarge"
 						isSmall={ isSmall }
 					>
-						<strong>{ __( 'Make it yours.', 'better-wp-security' ) }</strong>
+						<strong>{ __( 'Hackers Hate This Sale', 'better-wp-security' ) }</strong>
 						<br />
 						{ subtitle }
 					</StyledStellarSaleHeading>
@@ -87,7 +89,7 @@ export default function StellarSale( { installType } ) {
 							size="subtitleSmall"
 							weight={ 300 }
 							text={ createInterpolateElement(
-								__( 'Take <b>40%</b> off all StellarWP brands during the annual Stellar Sale. Now through July 30.', 'better-wp-security' ),
+								__( 'Save <b>30%</b> on StellarWP brands like StellarSites, Kadence, GiveWP, and more during the Stellar Sale now through August 5th.', 'better-wp-security' ),
 								{
 									b: <strong />,
 								}
@@ -113,7 +115,7 @@ export default function StellarSale( { installType } ) {
 					icon={ dismissIcon }
 					onClick={ () => setIsDismiss( true ) }
 				/>
-				<StyledStellarSaleGraphic isHuge={ isHuge } />
+				<StyledStellarSaleGraphic isWide={ isWide } />
 			</StyledStellarSale>
 		</ThemeProvider>
 	);
