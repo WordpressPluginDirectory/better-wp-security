@@ -13,9 +13,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { Surface, SurfaceVariant, Text, TextSize, TextVariant, TextWeight } from '@ithemes/ui';
 
-export default function ProTag() {
+export default function ProTag( { as = 'div' } ) {
 	return (
-		<StyledProSiteTag variant={ SurfaceVariant.DARK }>
+		<StyledProSiteTag variant={ SurfaceVariant.DARK } as={ as }>
 			<Text
 				size={ TextSize.SMALL }
 				variant={ TextVariant.WHITE }

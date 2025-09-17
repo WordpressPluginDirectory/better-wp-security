@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready';
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -15,11 +15,13 @@ const history = createHistory( document.location, { page: 'itsec-vulnerabilities
 domReady( () => {
 	const containerEl = document.getElementById( 'itsec-vulnerabilities-root' );
 
-	render(
-		<App history={ history } />,
-		containerEl
-	);
+	if ( containerEl ) {
+		createRoot( containerEl ).render(
+			<App history={ history } />
+		);
+	}
 } );
 
 export { BeforeHeaderFill } from './vulnerabilities/components/before-header/index';
-export { vulnerabilityIcon, severityColor } from './vulnerabilities/components/vulnerability-table';
+export { vulnerabilityIcon } from './vulnerabilities/components/vulnerability-table';
+export { default as PatchPriority } from './vulnerabilities/components/patch-priority';

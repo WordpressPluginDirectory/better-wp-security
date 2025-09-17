@@ -22,11 +22,11 @@ export const {
 export default function IpDetection( { question, onAnswer, isAnswering } ) {
 	const schema = question.answer_schema;
 	const proxyHeaderOptions = useMemo( () =>
-		schema.properties.proxy_header.enum.map( ( header, i ) => ( {
-			value: header,
-			label: schema.properties.proxy_header.enumNames[ i ],
+		schema.properties.proxy_header.oneOf.map( ( header ) => ( {
+			value: header.enum[ 0 ],
+			label: header.title,
 		} ) )
-	, [ schema.properties.proxy_header.enum, schema.properties.proxy_header.enumNames ] );
+	, [ schema.properties.proxy_header.oneOf ] );
 
 	const [ proxy, setProxy ] = useState( '' );
 	const [ proxyHeader, setProxyHeader ] = useState( '' );

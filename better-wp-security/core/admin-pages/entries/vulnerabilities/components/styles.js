@@ -17,4 +17,5 @@ export const StyledPageHeader = styled.header`
 	display: flex;
 	justify-content: space-between;
 	align-items: ${ ( { isSmall } ) => isSmall ? 'flex-start' : 'center' };
+	flex-wrap: wrap;
 `;

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import { setLocaleData } from '@wordpress/i18n';
 import { dispatch } from '@wordpress/data';
@@ -27,7 +27,9 @@ const history = createHistory( document.location, { page: 'itsec-user-security' 
 
 domReady( () => {
 	const containerEl = document.getElementById( 'itsec-user-security-root' );
-	render( <App history={ history } />, containerEl );
+	if ( containerEl ) {
+		createRoot( containerEl ).render( <App history={ history } /> );
+	}
 } );
 
 export { EditingModalActionFill } from './user-security/components/user-security-actions-modal/editing-modal';

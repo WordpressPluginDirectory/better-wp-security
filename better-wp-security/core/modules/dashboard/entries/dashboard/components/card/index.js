@@ -8,8 +8,8 @@ import styled from '@emotion/styled';
 /**
  * WordPress dependencies
  */
-import { pure } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
+import { memo, forwardRef } from '@wordpress/element';
 
 /**
  * iThemes dependencies
@@ -32,7 +32,7 @@ const StyledCard = styled( Surface )`
 	box-shadow: 0 0 5px rgba(211, 211, 211, 0.35);
 `;
 
-function Card( { id, dashboardId, className, gridWidth, children, ...rest } ) {
+function UnforwardedCard( { id, dashboardId, className, gridWidth, children, ...rest }, ref ) {
 	const { card, config } = useSelect(
 		( select ) => ( {
 			card: select( 'ithemes-security/dashboard' ).getDashboardCard( id ),
@@ -55,6 +55,7 @@ function Card( { id, dashboardId, className, gridWidth, children, ...rest } ) {
 					'itsec-card',
 					'itsec-card--unknown'
 				) }
+				ref={ ref }
 				{ ...rest }
 			>
 				<CardUnknown card={ card } dashboardId={ dashboardId } />
@@ -71,6 +72,7 @@ function Card( { id, dashboardId, className, gridWidth, children, ...rest } ) {
 					'itsec-card',
 					'itsec-card--no-rendered'
 				) }
+				ref={ ref }
 				{ ...rest }
 			>
 				<CardCrash card={ card } config={ config } />
@@ -83,6 +85,7 @@ function Card( { id, dashboardId, className, gridWidth, children, ...rest } ) {
 			as="article"
 			className={ classnames( className, 'itsec-card' ) }
 			id={ `itsec-card-${ card.id }` }
+			ref={ ref }
 			{ ...rest }
 			{ ...eqProps }
 		>
@@ -101,4 +104,6 @@ function Card( { id, dashboardId, className, gridWidth, children, ...rest } ) {
 	);
 }
 
-export default pure( Card );
+const Card = forwardRef( UnforwardedCard );
+
+export default memo( Card );

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import { setLocaleData } from '@wordpress/i18n';
 
@@ -13,4 +13,9 @@ setLocaleData( { '': {} }, 'ithemes-security-pro' );
  */
 import App from './go-pro/app.js';
 
-domReady( () => render( <App />, document.getElementById( 'itsec-go-pro-root' ) ) );
+domReady( () => {
+	const el = document.getElementById( 'itsec-go-pro-root' );
+	if ( el ) {
+		createRoot( el ).render( <App /> );
+	}
+} );

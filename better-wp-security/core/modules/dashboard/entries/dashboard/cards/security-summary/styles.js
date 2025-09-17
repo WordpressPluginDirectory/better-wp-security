@@ -67,14 +67,6 @@ export const StyledVulnerability = styled( Surface )`
 	gap: 0.5rem;
 `;
 
-export const StyledSeverity = styled( Text )`
-	& span {
-		padding: 1.5px 6.5px;
-		background-color: ${ ( { backgroundColor } ) => backgroundColor };
-		border-radius: 2px;
-	}
-`;
-
 export const StyledDetail = styled( Text )`
 	grid-area: details;
 `;

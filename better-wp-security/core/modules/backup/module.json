@@ -22,15 +22,25 @@
       },
       "method": {
         "type": "string",
-        "enum": [
-          "both",
-          "email",
-          "local"
-        ],
-        "enumNames": [
-          "Save Locally and Email",
-          "Email Only",
-          "Save Locally Only"
+        "oneOf": [
+          {
+            "enum": [
+              "both"
+            ],
+            "title": "Save Locally and Email"
+          },
+          {
+            "enum": [
+              "email"
+            ],
+            "title": "Email Only"
+          },
+          {
+            "enum": [
+              "local"
+            ],
+            "title": "Save Locally Only"
+          }
         ],
         "default": "email",
         "title": "Backup Method",

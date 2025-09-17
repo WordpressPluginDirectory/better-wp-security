@@ -54,7 +54,7 @@ export default function Scan() {
 						<tr>
 							<Text as="th" text={ __( 'Type', 'better-wp-security' ) } />
 							<Text as="th" text={ __( 'Vulnerability', 'better-wp-security' ) } />
-							<Text as="th" text={ __( 'Severity', 'better-wp-security' ) } />
+							<Text as="th" text={ __( 'Priority', 'better-wp-security' ) } />
 							<Text as="th" text={ __( 'Status', 'better-wp-security' ) } />
 							<Text as="th" text={ __( 'Date', 'better-wp-security' ) } />
 							<Text as="th" text={ __( 'Action', 'better-wp-security' ) } />

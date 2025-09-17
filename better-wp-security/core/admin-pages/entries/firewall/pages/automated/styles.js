@@ -130,7 +130,6 @@ export const StyledCombinedColumns = styled.div`
 };
 	grid-template-areas: "name version detail";
 	justify-items: start;
-	padding: .625rem;
 	gap: 0.6rem;
 `;
 
@@ -144,17 +143,6 @@ export const StyledVulnerabilityVersion = styled( Text )`
 
 export const StyledVulnerabilityDetail = styled( Text )`
 	grid-area: detail;
-`;
-
-export const StyledSeverity = styled( Text )`
-	display: flex;
-	justify-content: center;
-	width: min-content;
-	min-width: 2rem;
-	margin: ${ ( { isSmall } ) => ! isSmall && '0 auto' };
-	padding: 1.5px 6.5px;
-	background-color: ${ ( { backgroundColor } ) => backgroundColor };
-	border-radius: 2px;
 `;
 
 export const StyledTableSection = styled( Surface )`
@@ -182,11 +170,22 @@ export const StyledThead = styled( Text )`
 	padding: .625rem;
 	border-collapse: collapse;
 	overflow-y: auto;
+	width: ${ ( { shrink } ) => shrink && '0.1%' };
+	white-space: ${ ( { shrink } ) => shrink && 'nowrap' };
+`;
+
+export const StyledTableCell = styled.td`
+	width: 0.1%;
+	white-space: nowrap;
 `;
 
 export const StyledTable = styled.table`
 	width: 100%;
 	border-collapse: collapse;
+	
+	& td {
+		padding: .625rem;
+	}
 `;
 
 export const StyledTableCardContainer = styled.div`
@@ -220,10 +219,6 @@ export const StyledColumnContainer = styled.div`
 	display: grid;
   	grid-template-rows: 1fr 1fr;
 	gap: .8rem;
-`;
-
-export const StyledVulnerabilityIcon = styled( Text )`
-	padding: .625rem;
 `;
 
 export const StyledHasPatchstackDismiss = styled( Button )`

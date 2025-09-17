@@ -188,10 +188,17 @@ module.exports = function makeConfig( directory, pro ) {
 					resourceQuery: { not: [ /inline/ ] },
 					use: [
 						{
-							loader: 'svg-react-loader',
+							loader: '@svgr/webpack',
 							options: {
-								query: {
-									classIdPrefix: 'itsec-icon-[name]-[hash:5]__',
+								svgoConfig: {
+									plugins: [
+										{
+											name: 'prefixIds',
+											params: {
+												prefix: 'itsec-icon-[name]-[hash:5]__',
+											},
+										},
+									],
 								},
 							},
 						},

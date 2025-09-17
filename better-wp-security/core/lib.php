@@ -2899,4 +2899,23 @@ final class ITSEC_Lib {
 
 		return $value;
 	}
+
+	/**
+	 * Build a "oneOf" schema from a given map.
+	 *
+	 * This method generates an array of oneOf entries based on the provided map, where each schema
+	 * includes an "enum" and a "title" key.
+	 *
+	 * @param array $map An associative array where keys are the enum values and values are the titles.
+	 *
+	 * @return array An array of schemas, each containing "enum" and "title" entries.
+	 */
+	public static function build_one_of_schema( array $map ): array {
+		$result = [];
+		foreach ( $map as $enum => $title ) {
+			$result[] = ['enum' => [$enum], 'title' => $title];
+		}
+
+		return $result;
+	}
 }

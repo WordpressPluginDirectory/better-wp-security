@@ -37,8 +37,9 @@ function useDetectedIp( proxyProvided, proxyHeaderProvided ) {
 	const proxyHeader = proxyHeaderProvided || proxyHeaderSetting;
 
 	const execute = useCallback( () => {
+		const enumValues = schema.oneOf.map( ( option ) => option.enum[ 0 ] );
 		const data = {
-			proxy: schema.enum.includes( proxy ) ? proxy : schema.default,
+			proxy: enumValues.includes( proxy ) ? proxy : schema.default,
 		};
 
 		if ( data.proxy === 'manual' ) {

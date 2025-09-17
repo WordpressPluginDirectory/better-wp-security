@@ -15,8 +15,10 @@ final class ITSEC_Two_Factor_Settings extends Config_Settings {
 		$schema = parent::get_settings_schema();
 
 		foreach ( ITSEC_Two_Factor_Helper::get_instance()->get_all_provider_instances() as $provider ) {
-			$schema['properties']['custom_available_methods']['items']['enum'][]      = get_class( $provider );
-			$schema['properties']['custom_available_methods']['items']['enumNames'][] = $provider->get_label();
+			$schema['properties']['custom_available_methods']['items']['oneOf'][] = [
+				'enum'  => [ get_class( $provider ) ],
+				'title' => $provider->get_label()
+			];
 		}
 
 		return $schema;

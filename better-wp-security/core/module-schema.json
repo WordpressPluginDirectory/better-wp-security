@@ -278,7 +278,22 @@
         ],
         "properties": {
           "schedule": {
-            "type": "string"
+            "type": [
+              "object",
+              "string"
+            ],
+            "required": [
+              "free",
+              "pro"
+            ],
+            "properties": {
+              "free": {
+                "type": "string"
+              },
+              "pro": {
+                "type": "string"
+              }
+            }
           },
           "type": {
             "type": "string",

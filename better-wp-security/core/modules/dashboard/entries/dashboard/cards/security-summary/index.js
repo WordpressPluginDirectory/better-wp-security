@@ -25,7 +25,6 @@ import { Button, Notice, Text, TextSize, TextVariant } from '@ithemes/ui';
 import { useGlobalNavigationUrl } from '@ithemes/security-utils';
 import Header, { Title } from '../../components/card/header';
 import {
-	StyledSeverity,
 	StyledDetail,
 	StyledVulnerability,
 	StyledStar,
@@ -36,6 +35,7 @@ import {
 	StyledBlogIcon,
 	StyledBlogText,
 } from './styles';
+import { PatchPriority } from '@ithemes/security.pages.vulnerabilities';
 
 function vulnerabilityIcon( type ) {
 	switch ( type ) {
@@ -47,19 +47,6 @@ function vulnerabilityIcon( type ) {
 			return coreIcon;
 		default:
 			return undefined;
-	}
-}
-
-function severityColor( score ) {
-	switch ( true ) {
-		case score < 3:
-			return '#B8E6BF';
-		case score < 7:
-			return '#FFC518';
-		case score < 9:
-			return '#FFABAF';
-		default:
-			return '#D63638';
 	}
 }
 
@@ -78,9 +65,7 @@ function Vulnerability( { vulnerability, isSmall } ) {
 			{ vulnerability.software.type.slug !== 'wordpress' && (
 				<Text weight={ 500 } text={ vulnerability.software.label || vulnerability.software.slug } />
 			) }
-			<StyledSeverity backgroundColor={ severityColor( vulnerability.details.score ) }>
-				<span>{ vulnerability.details.score }</span>
-			</StyledSeverity>
+			<PatchPriority priority={ vulnerability.details.patch_priority } score={ vulnerability.details.score } />
 			<StyledDetail text={ vulnerability.details.type.label } />
 		</StyledVulnerability>
 	);

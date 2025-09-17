@@ -21,4 +21,13 @@ final class Blacklist_Issue implements Issue {
 	public function get_meta() {
 		return [];
 	}
+
+	/**
+	 * If the site gets blocked, it's a critical issue.
+	 *
+	 * @return int
+	 */
+	public function get_priority(): int {
+		return $this->status === Status::CLEAN ? Priority::NONE : Priority::HIGH;
+	}
 }

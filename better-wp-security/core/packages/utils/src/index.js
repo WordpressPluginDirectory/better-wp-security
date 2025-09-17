@@ -3,6 +3,7 @@
  */
 import { cloneDeep, get, isPlainObject, pick } from 'lodash';
 import Ajv from 'ajv';
+import { customizeValidator } from '@rjsf/validator-ajv8';
 
 /**
  * WordPress dependencies
@@ -486,69 +487,85 @@ export function isEmail( email ) {
 	return email;
 }
 
+const customFormats = {
+	html: {
+		type: 'string',
+		validate() {
+			// Validating HTML isn't something we can realistically do.
+			// We accept everything and can then kses it on the server.
+			return true;
+		},
+	},
+	'relative-file-path': {
+		type: 'string',
+		validate( value ) {
+			if ( value.includes( '../' ) ) {
+				return false;
+			}
+
+			return true;
+		},
+	},
+	'file-path': {
+		type: 'string',
+		validate( value ) {
+			if ( ! value.startsWith( '/' ) ) {
+				return false;
+			}
+
+			if ( value.includes( '../' ) ) {
+				return false;
+			}
+
+			return true;
+		},
+	},
+	directory: {
+		type: 'string',
+		validate( value ) {
+			if ( ! value.startsWith( '/' ) ) {
+				return false;
+			}
+
+			if ( value.includes( '../' ) ) {
+				return false;
+			}
+
+			return true;
+		},
+	},
+	email: {
+		type: 'string',
+		validate( value ) {
+			return isEmail( value );
+		},
+	},
+};
+
 /**
- * Grabs a global instance of Ajv.
+ * Grabs a global instance of Ajv. It's used for validation settings on saving
+ * with data store.
  *
  * @return {Ajv.Ajv} The ajv instance.
  */
 export function getAjv() {
 	if ( ! getAjv.instance ) {
-		getAjv.instance = new Ajv( { strict: false } );
-		getAjv.instance.addFormat( 'html', {
-			type: 'string',
-			validate() {
-				// Validating HTML isn't something we can realistically do.
-				// We accept everything and can then kses it on the server.
-				return true;
-			},
-		} );
-		getAjv.instance.addFormat( 'relative-file-path', {
-			type: 'string',
-			validate( value ) {
-				if ( value.includes( '../' ) ) {
-					return false;
-				}
-
-				return true;
-			},
-		} );
-		getAjv.instance.addFormat( 'file-path', {
-			type: 'string',
-			validate( value ) {
-				if ( ! value.startsWith( '/' ) ) {
-					return false;
-				}
-
-				if ( value.includes( '../' ) ) {
-					return false;
-				}
-
-				return true;
-			},
-		} );
-		getAjv.instance.addFormat( 'directory', {
-			type: 'string',
-			validate( value ) {
-				if ( ! value.startsWith( '/' ) ) {
-					return false;
-				}
-
-				if ( value.includes( '../' ) ) {
-					return false;
-				}
-
-				return true;
-			},
-		} );
-		getAjv.instance.addFormat( 'email', {
-			type: 'string',
-			validate( value ) {
-				return isEmail( value );
-			},
-		} );
+		getAjv.instance = new Ajv( { strict: false, formats: customFormats } );
 	}
 
 	return getAjv.instance;
+}
+
+/**
+ * Grabs a global instance of RJSF validator. It's required for creating RJSF forms
+ * and used by RJSF internally.
+ */
+export function getRjsfValidator() {
+	if ( ! getRjsfValidator.instance ) {
+		getRjsfValidator.instance = customizeValidator( { customFormats, ajvOptionsOverrides: { strict: false } } );
+	}
+
+	return getRjsfValidator.instance;
 }
 
 /**

@@ -47,4 +47,11 @@ interface Issue {
 	 * @return array
 	 */
 	public function get_meta();
+
+	/**
+	 * Provides issue priority.
+	 *
+	 * @return Priority::NONE | Priority::LOW | Priority::MEDIUM | Priority::HIGH
+	 */
+	public function get_priority(): int;
 }

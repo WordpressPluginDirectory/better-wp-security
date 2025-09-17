@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { setLocaleData } from '@wordpress/i18n';
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 
 // Silence warnings until JS i18n is stable.
@@ -27,14 +27,13 @@ domReady( () => {
 	const installType = containerEl.dataset.installType;
 	const onboardComplete = containerEl.dataset.onboard === '1';
 
-	return render(
+	createRoot( containerEl ).render(
 		<App
 			history={ history }
 			serverType={ serverType }
 			installType={ installType }
 			onboardComplete={ onboardComplete }
-		/>,
-		containerEl
+		/>
 	);
 } );
 

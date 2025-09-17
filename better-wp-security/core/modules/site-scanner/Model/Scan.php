@@ -191,6 +191,46 @@ final class Scan implements \Countable {
 	}
 
 	/**
+	 * Return new instance of scan with filtered issues.
+	 *
+	 * @psalm-param callable(Issue): bool $predicate
+	 * @param callable $predicate Callable to filter issues with.
+	 *
+	 * @return self
+	 */
+	public function filter_issues( callable $predicate ): self {
+		$entries = [];
+		foreach ( $this->get_entries() as $entry ) {
+			$issues = [];
+			foreach ( $entry->get_issues() as $issue ) {
+				if ( $predicate( $issue ) ) {
+					$issues[] = $issue;
+				}
+			}
+
+			$entries[] = new Entry( $entry->get_slug(), $entry->get_title(), $entry->get_status(), $issues );
+		}
+
+		return new self( $this->id, $this->code, $this->url, $this->time, $entries, $this->errors );
+	}
+
+	/**
+	 * Maximum priority for issues.
+	 *
+	 * @return Priority::NONE | Priority::LOW | Priority::MEDIUM | Priority::HIGH
+	 */
+	public function get_priority(): int {
+		$priorities = [];
+		foreach ( $this->get_entries() as $entry ) {
+			foreach ( $entry->get_issues() as $issue ) {
+				$priorities[] = $issue->get_priority();
+			}
+		}
+
+		return max($priorities ?: [Priority::NONE]);
+	}
+
+	/**
 	 * Counts the total number of issues found in the scan.
 	 *
 	 * @param string $status Only count issues with the given status.

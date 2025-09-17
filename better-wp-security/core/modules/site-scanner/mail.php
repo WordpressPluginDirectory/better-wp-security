@@ -1,8 +1,11 @@
 <?php
 
+use iThemesSecurity\Site_Scanner\Entry;
+use iThemesSecurity\Site_Scanner\Priority;
 use iThemesSecurity\Site_Scanner\Scan;
 use iThemesSecurity\Site_Scanner\Status;
 use iThemesSecurity\Site_Scanner\Issue;
+use iThemesSecurity\Site_Scanner\Vulnerability_Issue;
 
 class ITSEC_Site_Scanner_Mail {
 
@@ -14,12 +17,13 @@ class ITSEC_Site_Scanner_Mail {
 	 * @return bool
 	 */
 	public static function send( Scan $scan ) {
-		$nc   = ITSEC_Core::get_notification_center();
-		$mail = static::get_mail( $scan );
-
-		if ( ! $mail ) {
+		if ( $scan->get_status() !== Status::WARN ) {
+			// Don't send it if it's clean, has only muted issues or errors
 			return true;
 		}
+
+		$nc   = ITSEC_Core::get_notification_center();
+		$mail = static::get_mail( $scan );
 
 		return $nc->send( 'malware-scheduling', $mail );
 	}
@@ -29,18 +33,13 @@ class ITSEC_Site_Scanner_Mail {
 	 *
 	 * @param Scan $scan
 	 *
-	 * @return ITSEC_Mail|null
+	 * @return ITSEC_Mail
 	 */
 	public static function get_mail( Scan $scan ) {
-		$code = $scan->get_code();
-
-		if ( 'clean' === $code ) {
-			return null;
-		}
-
 		$nc = ITSEC_Core::get_notification_center();
 
 		$mail = $nc->mail();
+		$code = $scan->get_code();
 		$mail->set_subject( static::get_scan_subject( $code ) );
 		$mail->set_recipients( $nc->get_recipients( 'malware-scheduling' ) );
 
@@ -82,7 +81,7 @@ class ITSEC_Site_Scanner_Mail {
 		}
 
 		$mail->add_header(
-			esc_html__( 'Site Scan', 'better-wp-security' ),
+			self::get_scan_heading( $code ),
 			sprintf(
 				esc_html__( 'Site Scan for %s', 'better-wp-security' ),
 				'<b>' . ITSEC_Lib::date_format_i18n_and_local_timezone( $scan->get_time()->getTimestamp(), get_option( 'date_format' ) ) . '</b>'
@@ -90,6 +89,8 @@ class ITSEC_Site_Scanner_Mail {
 			false,
 			$lead,
 		);
+		$priority = $scan->get_priority();
+		self::add_overall_priority_section( $mail, $priority );
 		static::format_scan_body( $mail, $scan );
 		$mail->add_footer( false );
 
@@ -124,6 +125,26 @@ class ITSEC_Site_Scanner_Mail {
 	}
 
 	/**
+	 * Get the heading for a site scan result.
+	 *
+	 * @param string $code
+	 *
+	 * @return string
+	 */
+	private static function get_scan_heading( string $code ): string {
+		switch ( $code ) {
+			case 'vulnerable-software':
+				return esc_html__( 'New Vulnerabilities Identified!', 'better-wp-security' );
+			case 'on-blacklist':
+				return esc_html__( 'Site Blocklisted!', 'better-wp-security' );
+			case 'found-malware':
+				return esc_html__( 'Malware Found!', 'better-wp-security' );
+			default:
+				return esc_html__( 'Site Scan', 'better-wp-security' );
+		}
+	}
+
+	/**
 	 * Format the scan results into the mail object.
 	 *
 	 * @param ITSEC_Mail $mail
@@ -137,52 +158,26 @@ class ITSEC_Site_Scanner_Mail {
 			$log_url = ITSEC_Mail::filter_admin_page_url( $log_url );
 		}
 
-		if ( $scan->is_error() ) {
-			$mail->add_list( array(
-				/* translators: 1. Site name. */
-				sprintf( esc_html__( 'An error occurred while running the scheduled site scan on %s:', 'better-wp-security' ), get_bloginfo( 'name', 'display' ) ),
-				sprintf( esc_html__( 'Error Message: %s', 'better-wp-security' ), $scan->get_error()->get_error_message() ),
-				sprintf( esc_html__( 'Error Code: %s', 'better-wp-security' ), '<code>' . esc_html( $scan->get_error()->get_error_code() ) . '</code>' ),
-			), true );
-
-			if ( $log_url ) {
-				$mail->add_button( esc_html__( 'View Report', 'better-wp-security' ), $log_url );
-			}
-
-			return;
-		}
-
 		$mail->start_group( 'report' );
 
 		foreach ( $scan->get_entries() as $entry ) {
-			if ( $entry->get_status() !== Status::WARN ) {
+			if ( $entry->get_status() !== Status::WARN || count( $entry->get_issues() ) === 0 ) {
 				continue;
 			}
 
-			$mail->add_list( array_reduce( $entry->get_issues(), static function ( array $list, Issue $issue ) {
-				if ( $issue->get_status() !== Status::WARN ) {
-					return $list;
-				}
-
-				if ( $issue instanceof \iThemesSecurity\Site_Scanner\Vulnerability_Issue ) {
-					$item = esc_html( $issue->get_description() ) . '<br>';
-					$item .= '<span style="margin-left: 12px; font-size: 14px;">';
-					$item .= sprintf( '<a href="%s">%s</a>', esc_url( ITSEC_Mail::filter_admin_page_url( $issue->get_link() ) ), esc_attr__( 'Manage Vulnerability', 'better-wp-security' ) );
-
-					$patchstack = $issue->get_meta()['issue']['references'][0]['refs'][0]['link'] ?? '';
-
-					if ( $patchstack ) {
-						$item .= sprintf( ' | <a href="%s">%s</a>', esc_url( $patchstack ), esc_attr__( 'View in Patchstack', 'better-wp-security' ) );
-					}
-					$item .= '</span>';
-				} else {
-					$item = sprintf( '<a href="%s">%s</a>', esc_url( $issue->get_link() ), esc_html( $issue->get_description() ) );
-				}
-
-				$list[] = $item;
-
-				return $list;
-			}, [] ), false, true, $entry->get_title() );
+			switch ( $entry->get_slug() ) {
+				case 'vulnerabilities':
+					$mail->add_section_heading( __('New Vulnerabilities', 'better-wp-security') );
+					$mail->add_text(
+						__('Each vulnerability is assigned a Patchstack priority score to help inform your next steps. If no virtual patch has been applied, ensure that you patch/update within the recommended timeframe.', 'better-wp-security'),
+						'light',
+						10
+					);
+					$mail->add_section(self::format_vulnerability_issues( $mail, $entry->get_issues() ));
+					break;
+				default:
+					$mail->add_list(self::format_issues($entry), false, true, $entry->get_title());
+			}
 		}
 
 		$errors = count( $scan->get_errors() );
@@ -226,6 +221,115 @@ class ITSEC_Site_Scanner_Mail {
 
 		if ( ! ITSEC_Core::is_pro() ) {
 			$mail->add_site_scanner_pro_callout();
+		}
+	}
+
+	private static function format_issues( Entry $entry): array {
+		return array_reduce( $entry->get_issues(), static function ( array $list, Issue $issue ) {
+			if ( $issue->get_status() !== Status::WARN ) {
+				return $list;
+			}
+
+			$list[] = sprintf( '<a href="%s">%s</a>', esc_url( $issue->get_link() ), esc_html( $issue->get_description() ) );
+
+			return $list;
+		}, [] );
+	}
+
+	/**
+	 * Prepare a formatted list of vulnerability issues.
+	 *
+	 * @param ITSEC_Mail $mail Target mail object.
+	 * @param array<Issue> $issues Array of vulnerability issues.
+	 *
+	 * @return string Formatted HTML.
+	 */
+	public static function format_vulnerability_issues( ITSEC_Mail $mail, array $issues ): string {
+		// Sort issues by priority (High -> Medium -> Low -> None) before rendering.
+		usort($issues, static function ( Issue $a, Issue $b ): int {
+			return $b->get_priority() <=> $a->get_priority();
+		});
+
+		return array_reduce( $issues, static function ( string $list, Issue $issue ) use ( $mail ) {
+			if (  ! $issue instanceof Vulnerability_Issue || $issue->get_status() !== Status::WARN ) {
+				return $list;
+			}
+
+			$item = '<p style="font-size: 16px; line-height: 24px; margin: 0;">' . esc_html( $issue->get_description() ) . '</p>';
+			$item .= '<table style="padding-top: 16px; padding-bottom: 16px;"><tr><td>'
+			         . '<strong style="font-size: 13px; margin-right: 8px">'
+			         . __('Patchstack Priority:', 'better-wp-security')
+			         . '</strong></td><td>'
+			         . $mail->get_priority_badge( $issue->get_priority(), self::get_priority_label(  $issue->get_priority()))
+			         . '</td></tr></table>';
+
+			$item .= '<span style="font-size: 16px;">';
+			$item .= sprintf( '<a href="%s">%s</a>', esc_url( ITSEC_Mail::filter_admin_page_url( $issue->get_link() ) ), esc_attr__( 'Manage Vulnerability', 'better-wp-security' ) );
+
+			$patchstack = $issue->get_meta()['issue']['references'][0]['refs'][0]['link'] ?? '';
+
+			if ( $patchstack ) {
+				$item .= sprintf( ' | <a href="%s">%s</a>', esc_url( $patchstack ), esc_attr__( 'View in Patchstack', 'better-wp-security' ) );
+			}
+			$item .= '</span>';
+
+			$list .= '<tr><td style="padding-top:28px; padding-bottom: 28px; border-bottom: 1px solid #e7e7e7;">' . $item . '</td></tr>';
+
+			return $list;
+		}, '<table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">' ) . '</table>';
+	}
+
+	private static function add_overall_priority_section( ITSEC_Mail $mail, int $priority ): void {
+		if ( $priority <= Priority::NONE ) {
+			return;
+		}
+		$mail->add_section(
+			$mail->get_priority_badge( $priority, self::get_priority_label( $priority))
+			. '<p style="font-size: 13px; margin-top: 8px; margin-bottom: 0; color: #232323;">'
+			. self::get_priority_description( $priority )
+			. '</p>',
+		);
+	}
+
+	/**
+	 * Provide priority label.
+	 *
+	 * @psalm-param Priority::NONE | Priority::LOW | Priority::MEDIUM | Priority::HIGH $priority
+	 * @param int $priority
+	 *
+	 * @return string
+	 */
+	private static function get_priority_label( int $priority ): string {
+		switch ( $priority ) {
+			case Priority::NONE:
+				return esc_html__( 'None', 'better-wp-security' );
+			case Priority::LOW:
+				return esc_html__( 'Low', 'better-wp-security' );
+			case Priority::MEDIUM:
+				return esc_html__( 'Medium', 'better-wp-security' );
+			default:
+				return esc_html__( 'High', 'better-wp-security' );
+		}
+	}
+
+	/**
+	 * Provide priority description.
+	 *
+	 * @psalm-param Priority::NONE | Priority::LOW | Priority::MEDIUM | Priority::HIGH $priority
+	 * @param int $priority
+	 *
+	 * @return string
+	 */
+	private static function get_priority_description( int $priority ): string {
+		switch ( $priority ) {
+			case Priority::NONE:
+				return '';
+			case Priority::LOW:
+				return __( 'Low-priority issues found. Resolve within <strong>30 days.</strong>', 'better-wp-security' );
+			case Priority::MEDIUM:
+				return __( 'Medium-priority issues found. Resolve within <strong>7 days.</strong>', 'better-wp-security' );
+			default:
+				return __( 'High-priority issues found. Resolve within <strong>24 hours.</strong>', 'better-wp-security' );
 		}
 	}
 }

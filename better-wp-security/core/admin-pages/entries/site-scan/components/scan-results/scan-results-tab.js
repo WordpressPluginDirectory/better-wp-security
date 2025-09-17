@@ -57,7 +57,7 @@ function ResultsList( { hasIssues, isScanRunning, type } ) {
 				<Text
 					textTransform="uppercase"
 					variant={ TextVariant.DARK }
-					text={ __( 'Severity', 'better-wp-security' ) }
+					text={ __( 'Priority', 'better-wp-security' ) }
 				/>
 			</StyledListHeading>
 			{ isScanRunning || hasIssues ? (
@@ -80,14 +80,14 @@ function ResultsTable( { hasIssues, isScanRunning, isLarge, type } ) {
 					<tr>
 						<StyledTypeHeading as="th" text={ __( 'Type', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Scan Info', 'better-wp-security' ) } />
-						<Text as="th" text={ __( 'Severity', 'better-wp-security' ) } />
+						<Text as="th" text={ __( 'Priority', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Action', 'better-wp-security' ) } align="right" />
 					</tr>
 				) : (
 					<tr>
 						<Text as="th" text={ __( 'Type', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Scan Info', 'better-wp-security' ) } />
-						<Text as="th" text={ __( 'Severity', 'better-wp-security' ) } />
+						<Text as="th" text={ __( 'Priority', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Action', 'better-wp-security' ) } align="right" />
 					</tr>
 				) }

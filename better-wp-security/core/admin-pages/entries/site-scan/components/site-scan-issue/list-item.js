@@ -15,13 +15,11 @@ import store from '../../store';
  * Internal dependencies
  */
 import {
-	severityColor,
-	severityText,
 	StyledDetailsContainer,
 	StyledListDetailsContainer,
 	StyledListItem,
-	StyledSeverity,
 } from './styles';
+import { Priority } from '@ithemes/security-ui';
 
 export default function ListItem( { icon, issue, children } ) {
 	const { component } = useSelect( ( select ) => ( {
@@ -43,11 +41,7 @@ export default function ListItem( { icon, issue, children } ) {
 				</div>
 
 				<div>
-					<StyledSeverity
-						backgroundColor={ severityColor( issue.severity ) }
-						weight={ 600 }
-						text={ severityText( issue.severity ) }
-					/>
+					<Priority priority={ issue.severity } />
 				</div>
 				<Button
 					aria-controls={ `solid-scan-result-${ issue.component + '-' + issue.id }` }

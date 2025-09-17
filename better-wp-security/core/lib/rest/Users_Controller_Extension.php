@@ -60,33 +60,30 @@ class Users_Controller_Extension implements Runnable {
 		$params['solid_password_strength'] = [
 			'type'  => 'array',
 			'items' => [
-				'type'      => 'integer',
-				'enum'      => [ 0, 1, 2, 3, 4 ],
-				'enumNames' => [
-					_x( 'Very Weak', 'password strength', 'better-wp-security' ),
-					_x( 'Weak', 'password strength', 'better-wp-security' ),
-					_x( 'Medium', 'password strength', 'better-wp-security' ),
-					_x( 'Strong', 'password strength', 'better-wp-security' ),
-				]
+				'type'  => 'integer',
+				'oneOf' => [
+					[ 'enum' => [ 0 ], 'title' => _x( 'Very Weak', 'password strength', 'better-wp-security' ) ],
+					[ 'enum' => [ 1 ], 'title' => _x( 'Very Weak', 'password strength', 'better-wp-security' ) ],
+					[ 'enum' => [ 2 ], 'title' => _x( 'Weak', 'password strength', 'better-wp-security' ) ],
+					[ 'enum' => [ 3 ], 'title' => _x( 'Medium', 'password strength', 'better-wp-security' ) ],
+					[ 'enum' => [ 4 ], 'title' => _x( 'Strong', 'password strength', 'better-wp-security' ) ],
+				],
 			],
 		];
 
 		if ( \ITSEC_Modules::is_active( 'two-factor' ) ) {
-			$enum      = [ 'enabled', 'not-enabled' ];
-			$enumNames = [
-				__( 'Configured Two-Factor', 'better-wp-security' ),
-				__( 'Not Configured Two-Factor', 'better-wp-security' ),
+			$oneOf = [
+				[ 'enum' => [ 'enabled' ], 'title' => __( 'Configured Two-Factor', 'better-wp-security' ) ],
+				[ 'enum' => [ 'not-enabled' ], 'title' => __( 'Not Configured Two-Factor', 'better-wp-security' ) ],
 			];
 
 			if ( \ITSEC_Core::get_install_type() === 'pro' && \ITSEC_Modules::get_setting( 'two-factor', 'protect_user_group' ) ) {
-				$enum[]      = 'enforced-not-configured';
-				$enumNames[] = __( 'Two-Factor Enforced', 'better-wp-security' );
+				$oneOf[] = [ 'enum' => [ 'enforced-not-configured' ], 'title' => __( 'Two-Factor Enforced', 'better-wp-security' ) ];
 			}
 
 			$params['solid_2fa'] = [
-				'type'      => 'string',
-				'enum'      => $enum,
-				'enumNames' => $enumNames,
+				'type'  => 'string',
+				'oneOf' => $oneOf,
 			];
 		}
 
@@ -289,12 +286,11 @@ class Users_Controller_Extension implements Runnable {
 			},
 			'schema'       => [
 				'type'      => [ 'string', 'null' ],
-				'enum'      => [ 'enabled', 'not-enabled', 'enforced-not-configured', 'not-available' ],
-				'enumNames' => [
-					__( 'Configured Two-Factor', 'better-wp-security' ),
-					__( 'Not Configured Two-Factor', 'better-wp-security' ),
-					__( 'Two-Factor Enforced', 'better-wp-security' ),
-					__( 'Two-Factor Not Available', 'better-wp-security' ),
+				'oneOf' => [
+					[ 'enum' => [ 'enabled' ], 'title' => __( 'Configured Two-Factor', 'better-wp-security' ) ],
+					[ 'enum' => [ 'not-enabled' ], 'title' => __( 'Not Configured Two-Factor', 'better-wp-security' ) ],
+					[ 'enum' => [ 'enforced-not-configured' ], 'title' => __( 'Two-Factor Enforced', 'better-wp-security' ) ],
+					[ 'enum' => [ 'not-available' ], 'title' => __( 'Two-Factor Not Available', 'better-wp-security' ) ],
 				],
 				'context'   => [ 'edit' ],
 				'readonly'  => true,

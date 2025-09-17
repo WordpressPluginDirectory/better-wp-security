@@ -6,18 +6,16 @@ import { isObject, mapValues } from 'lodash';
 /**
  * Internal dependencies
  */
+import * as templates from './templates';
 import * as widgets from './widgets';
 import * as fields from './fields';
-import FieldTemplate from './field-template';
-import ObjectFieldTemplate from './field-template/object';
-import ErrorList from './error-list';
+import { getRjsfValidator } from '@ithemes/security-utils';
 
 const theme = {
-	FieldTemplate,
-	ObjectFieldTemplate,
-	ErrorList,
+	templates,
 	widgets,
 	fields,
+	validator: getRjsfValidator(),
 };
 
 export default theme;

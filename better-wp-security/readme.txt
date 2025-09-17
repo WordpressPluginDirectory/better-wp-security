@@ -3,8 +3,8 @@ Contributors: ithemes, timothyblynjacobs, lisacee, solidwp
 Tags: security, malware, two factor authentication, brute force protection, password protection
 Requires at least: 6.5
 Tested up to: 6.8
-Stable tag: 9.3.9
-Requires PHP: 7.3
+Stable tag: 9.4.1
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,13 +99,23 @@ Local Brute Force Protection - Automatically identify and stop the most common m
 
 - **File Change Detection** (Basic and Pro) - Solid Security logs changes made to your website that can help detect malicious activity on your website.
 
-- **Site Scanner** (Basic and Pro) - Enable twice-daily checks for known vulnerabilities of WordPress core file, plugins and themes. Using the Google Safe Browsing API, the Site Scan also checks your Google’s blocklist status and will alert you if Google has found any malware on your website.
+- **Site Scanner (Basic and Pro)** – Schedule checks to run four times per day (Basic) or hourly (Pro) for known vulnerabilities of WordPress core file, plugins and themes. Using the Google Safe Browsing API, the Site Scan also checks your Google’s blocklist status and will alert you if Google has found any malware on your website.
+
+- **Patchstack integration (Pro)** - Automated virtual patching of some vulnerabilities before you even have a chance to address them yourself, and before a plugin or theme vendor or developer can even issue a patch.
 
 - **Site Scanner** (Pro) - Unlock Version Management to automatically apply a patch to vulnerable software detected by the Site Scan when one is available.
 
 - **User Logging** (Pro) - Keep a record of user activity in your WordPress security logs, including login/logout, user registration, adding/removing plugins, switching themes, changes to posts and pages, and more.
 
 - **Version Management** (Pro) - The Version Management feature in Solid Security Pro allows you to auto-update WordPress, plugins, and themes. Beyond that, Version Management also has options to harden your website when you are running outdated software and scan for old websites.
+
+= 🧠 Smarter, More Actionable Vulnerability Prioritization =
+
+Not all vulnerabilities pose the same level of risk, and the traditional Common Vulnerability Scoring System (CVSS) score doesn’t always reflect the realities of running a WordPress site.
+
+Solid Security now uses the Patchstack Priority score, which goes beyond CVSS to provide a real-world risk assessment tailored to WordPress. It factors in how likely a vulnerability is to be exploited and its actual impact on your site.
+
+With Patchstack Priority, you get a clearer picture of what really matters, helping you focus on the vulnerabilities that pose the greatest risk, and worry less about noise from low-impact issues.
 
 = 🛠️ Website Security Utilities =
 
@@ -176,6 +186,20 @@ Manage more than one WordPress site? Release lockouts and keep your themes, plug
 8. Automated vulnerability patching with Patchstack (Pro)
 
 == Changelog ==
+
+= 9.4.1 =
+* Bug Fix: Missing assets in release 9.4.0.
+
+= 9.4.0 =
+* Important: Solid Security now requires PHP 7.4 or later.
+* New: Patchstack Priority tells you how quickly you should address a vulnerability so you can focus on the most critical issues.
+* New: The Security Digest email includes a complete list of vulnerabilities affecting your site.
+* Enhancement: The Site Scan email now only includes newly found vulnerabilities to prevent notification fatigue.
+* Enhancement: Site Scans now run four times daily to detect new vulnerabilities.
+* Tweak: Make frontend JS code compatible with React 18.
+
+= 9.3.10 =
+* Tweak: Update SolidWP Logo
 
 = 9.3.9 =
 * Tweak: Reduce number of steps in the onboarding sequence.

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { without } from 'lodash';
-import { utils } from '@rjsf/core';
+import { getUiOptions } from '@rjsf/utils';
 
 /**
  * WordPress dependencies
@@ -13,8 +13,6 @@ import { TextareaControl } from '@wordpress/components';
  * Internal dependencies
  */
 import { Markup } from '@ithemes/security-components';
-
-const { getUiOptions } = utils;
 
 export default function TextareaWidget( {
 	schema,

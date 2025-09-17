@@ -29,11 +29,11 @@ import {
 	StyledVulnerabilityVersion,
 	StyledVulnerabilityDetail,
 	StyledVulnerability,
-	StyledSeverity,
 	StyledStatusCheck,
 	StyledStatusRedCircle,
 	StyledNoWrapCell,
 } from './styles';
+import PatchPriority from '../../components/patch-priority';
 
 function vulnerabilityIcon( type ) {
 	switch ( type.toLowerCase() ) {
@@ -45,19 +45,6 @@ function vulnerabilityIcon( type ) {
 			return coreIcon;
 		default:
 			return undefined;
-	}
-}
-
-function severityColor( score ) {
-	switch ( true ) {
-		case score < 3:
-			return '#B8E6BF';
-		case score < 7:
-			return '#FFC518';
-		case score < 9:
-			return '#FFABAF';
-		default:
-			return '#D63638';
 	}
 }
 
@@ -93,7 +80,7 @@ export default function PatchstackTable( { items } ) {
 					<tr>
 						<Text as="th" text={ __( 'Type', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Vulnerability', 'better-wp-security' ) } />
-						<Text as="th" text={ __( 'Severity', 'better-wp-security' ) } />
+						<Text as="th" text={ __( 'Priority', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Status', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Date', 'better-wp-security' ) } />
 						<Text as="th" text={ __( 'Action', 'better-wp-security' ) } />
@@ -113,7 +100,7 @@ export default function PatchstackTable( { items } ) {
 											<StyledVulnerabilityDetail text={ vulnerability.vuln_type } />
 										</StyledVulnerability>
 									</td>
-									<td><StyledSeverity backgroundColor={ severityColor( vulnerability.cvss_score ) } status={ vulnerability.status } weight={ 600 } text={ vulnerability.cvss_score } /></td>
+									<td><PatchPriority priority={ vulnerability.patch_priority } score={ vulnerability.score } /></td>
 									<td>
 										<Text icon={ statusIcon( vulnerability.fixed_in ) } iconSize={ 16 } text={ statusText( vulnerability.fixed_in ) } />
 									</td>

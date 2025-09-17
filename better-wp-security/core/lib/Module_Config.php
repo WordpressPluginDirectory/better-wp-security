@@ -16,7 +16,7 @@ final class Module_Config {
 		self::T_PASSWORD_REQUIREMENTS,
 		self::T_TOOLS,
 	];
-	const TRANSLATE = [ 'title', 'description', 'help', 'keywords', 'enumNames' ];
+	const TRANSLATE = [ 'title', 'description', 'help', 'keywords' ];
 
 	/** @var array */
 	private $config;

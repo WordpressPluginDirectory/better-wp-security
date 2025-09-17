@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { setLocaleData } from '@wordpress/i18n';
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 
 setLocaleData( { '': {} }, 'better-wp-security' );
@@ -19,7 +19,7 @@ domReady( () => {
 		const canManage = el.dataset.canManage === '1';
 		const installType = el.dataset.installType;
 
-		render( <App context={ { canManage, installType } } />, el );
+		createRoot( el ).render( <App context={ { canManage, installType } } /> );
 	}
 } );
 

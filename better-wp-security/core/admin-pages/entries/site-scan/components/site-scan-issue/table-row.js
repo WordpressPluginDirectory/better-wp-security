@@ -16,15 +16,13 @@ import store from '../../store';
  * Internal dependencies
  */
 import {
-	severityColor,
-	severityText,
 	StyledCombinedColumns,
 	StyledDetailsContainer,
 	StyledRowDetailsContainer,
 	StyledScanInfo,
-	StyledSeverity,
 	StyledAction,
 } from './styles';
+import { Priority } from '@ithemes/security-ui';
 
 export default function TableRow( { icon, issue, isLarge, children } ) {
 	const { component } = useSelect( ( select ) => ( {
@@ -50,11 +48,7 @@ export default function TableRow( { icon, issue, isLarge, children } ) {
 							</StyledScanInfo>
 						</td>
 						<td>
-							<StyledSeverity
-								weight={ 600 }
-								backgroundColor={ severityColor( issue.severity ) }
-								text={ severityText( issue.severity ) }
-							/>
+							<Priority priority={ issue.severity } />
 						</td>
 					</>
 				) }
@@ -73,11 +67,7 @@ export default function TableRow( { icon, issue, isLarge, children } ) {
 							</StyledCombinedColumns>
 						</td>
 						<td>
-							<StyledSeverity
-								weight={ 600 }
-								backgroundColor={ severityColor( issue.severity ) }
-								text={ severityText( issue.severity ) }
-							/>
+							<Priority priority={ issue.severity } />
 						</td>
 					</>
 				) }

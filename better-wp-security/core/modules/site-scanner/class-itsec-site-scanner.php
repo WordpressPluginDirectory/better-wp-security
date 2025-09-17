@@ -30,6 +30,7 @@ class ITSEC_Site_Scanner implements Runnable {
 		add_action( 'deleted_plugin', [ $this, 'resolve_deleted_plugin' ], 10, 2 );
 		add_action( 'switch_theme', [ $this, 'resolve_switched_theme' ], 10, 3 );
 		add_action( 'deleted_theme', [ $this, 'resolve_deleted_theme' ], 10, 2 );
+		add_action( 'itsec_security_digest_before', [ $this, 'add_vulnerabilities_section_to_digest' ] );
 
 		add_filter( 'debug_information', [ $this, 'add_site_health_info' ] );
 
@@ -371,6 +372,34 @@ class ITSEC_Site_Scanner implements Runnable {
 
 			$this->vulnerabilities->persist( $vulnerability );
 		}
+	}
+
+	public function add_vulnerabilities_section_to_digest( ITSEC_Mail $mail ): void {
+		$vulnerabilities = $this->vulnerabilities->get_vulnerabilities(
+			( new Vulnerabilities_Options() )
+				->set_resolutions( [ '', Vulnerability::R_PATCHED ] )
+		);
+
+		if ( ! $vulnerabilities->is_success() ) {
+			return;
+		}
+
+		if ( count( $vulnerabilities->get_data() ) === 0 ) {
+			return;
+		}
+
+		$issues = array_map(
+			static fn( Vulnerability $vulnerability ) => $vulnerability->as_issue(),
+			$vulnerabilities->get_data()
+		);
+
+		$mail->add_section_heading( __('Known Vulnerabilities', 'better-wp-security') );
+		$mail->add_text(
+			__('Each vulnerability is assigned a Patchstack priority score to help inform your next steps. If no virtual patch has been applied, ensure that you patch/update within the recommended timeframe.', 'better-wp-security'),
+			'light',
+			10
+		);
+		$mail->add_section(ITSEC_Site_Scanner_Mail::format_vulnerability_issues( $mail, $issues ));
 	}
 
 	/**

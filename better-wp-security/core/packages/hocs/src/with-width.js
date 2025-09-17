@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Component, findDOMNode } from '@wordpress/element';
+import { Component, createRef } from '@wordpress/element';
 import { createHigherOrderComponent } from '@wordpress/compose';
 
 /*
@@ -9,62 +9,65 @@ import { createHigherOrderComponent } from '@wordpress/compose';
  */
 const withWidth = createHigherOrderComponent( ( WrappedComponent ) => {
 	return class WithWidth extends Component {
-		static defaultProps = {
-			measureBeforeMount: false,
-		};
-
 		state = {
 			width: 1280,
 		};
 
 		mounted = false;
-		ref = null;
+		containerRef = createRef();
+		resizeObserver = null;
 
 		componentDidMount() {
 			this.mounted = true;
 
 			window.addEventListener( 'resize', this.onWindowResize );
-			document
-				.getElementById( 'collapse-button' )
-				.addEventListener( 'click', this.onWindowResize );
-			this.onWindowResize();
+			const collapseBtn = document.getElementById( 'collapse-button' );
+			collapseBtn?.addEventListener( 'click', this.onWindowResize );
+
+			// Prefer ResizeObserver when available
+			if ( 'ResizeObserver' in window && this.containerRef.current ) {
+				this.resizeObserver = new window.ResizeObserver( ( [ entry ] ) => {
+					if ( ! this.mounted ) {
+						return;
+					}
+					const width = Math.round( entry.contentRect.width );
+					this.setState( { width } );
+				} );
+				this.resizeObserver.observe( this.containerRef.current );
+			} else {
+				this.onWindowResize();
+			}
 		}
 
 		componentWillUnmount() {
 			this.mounted = false;
 			window.removeEventListener( 'resize', this.onWindowResize );
-			document
-				.getElementById( 'collapse-button' )
-				.removeEventListener( 'click', this.onWindowResize );
+			const collapseBtn = document.getElementById( 'collapse-button' );
+			collapseBtn?.removeEventListener( 'click', this.onWindowResize );
+			this.resizeObserver?.disconnect();
 		}
 
 		onWindowResize = () => {
-			if ( ! this.mounted ) {
+			if ( ! this.mounted || ! this.containerRef.current ) {
 				return;
 			}
 
-			// eslint-disable-next-line react/no-find-dom-node
-			const node = findDOMNode( this );
-
-			if ( node instanceof window.HTMLElement ) {
-				const width = node.offsetWidth;
-				this.setState( { width } );
-			}
+			const width = this.containerRef.current.offsetWidth;
+			this.setState( { width } );
 		};
 
 		render() {
-			const { measureBeforeMount, ...rest } = this.props;
+			const { measureBeforeMount = false, className, style, ...rest } = this.props;
 			if ( measureBeforeMount && ! this.mounted ) {
 				return (
-					<div
-						className={ this.props.className }
-						style={ this.props.style }
-					/>
+					<div className={ className } style={ style } ref={ this.containerRef } />
 				);
 			}
 
 			return (
-				<WrappedComponent { ...rest } width={ this.state.width + 20 } />
+				<div ref={ this.containerRef } className={ className } style={ style }>
+					<WrappedComponent { ...rest } width={ this.state.width + 20 } />
+				</div>
 			);
 		}
 	};

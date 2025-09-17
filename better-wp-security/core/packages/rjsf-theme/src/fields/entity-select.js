@@ -1,14 +1,12 @@
 /**
  * External dependencies
  */
-import { utils } from '@rjsf/core';
+import { getUiOptions } from '@rjsf/utils';
 
 /**
  * Internal dependencies
  */
 import { EntitySelectControl } from '@ithemes/security-ui';
-
-const { getUiOptions } = utils;
 
 export default function EntitySelectField( {
 	uiSchema,

@@ -2,7 +2,7 @@ export { default as ErrorRenderer } from './error-renderer';
 export { default as FeatureToggle } from './feature-toggle';
 export { default as Logo } from './logo';
 export { default as Main } from './main';
-export { default as ModuleCard } from './module-card';
+export { default as ModuleCard, ModulePanelHeaderFill } from './module-card';
 export { default as ModuleFormInputs } from './module-form-inputs';
 export { default as Navigation, NavigationFill } from './navigation';
 export { default as NoticeList } from './notice-list';

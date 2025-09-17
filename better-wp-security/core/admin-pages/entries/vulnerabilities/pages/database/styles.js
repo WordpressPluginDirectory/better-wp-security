@@ -46,15 +46,6 @@ export const StyledVulnerability = styled( Surface )`
 	}
 `;
 
-export const StyledSeverity = styled( Text )`
-	padding: 1.5px 6.5px;
-	background-color: ${ ( { backgroundColor } ) => backgroundColor };
-	border-radius: 2px;
-	width:35px;
-	display: flex;
-	justify-content: center;
-`;
-
 export const StyledStatusCheck = styled( Icon )`
   // the fill colors are in the component, otherwise black - or could use !important
 	fill: white;

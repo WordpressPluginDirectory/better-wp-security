@@ -1,5 +1,7 @@
 <?php
 
+use iThemesSecurity\Site_Scanner\Priority;
+
 final class ITSEC_Mail {
 	private $name;
 	private $content = '';
@@ -201,14 +203,20 @@ final class ITSEC_Mail {
 		$this->add_html( $footer, 'user-footer' );
 	}
 
-	public function add_text( $content, $color = 'light' ) {
-		$this->add_html( $this->get_text( $content, $color ) );
+	public function add_text( $content, $color = 'light', $padding_bottom = 40 ) {
+		$this->add_html( $this->get_text( $content, $color, $padding_bottom ) );
 	}
 
-	public function get_text( $content, $color = 'light' ) {
+	public function add_section( $content ) {
+		$template = $this->get_template( 'section.html' );
+		$this->add_html( $this->replace( $template, 'content', $content ) );
+	}
+
+	public function get_text( $content, $color = 'light', $padding_bottom = 40 ) {
 		$module = $this->get_template( 'text.html' );
 		$module = $this->replace( $module, 'content', $content );
 		$module = $this->replace( $module, 'color', $color === 'dark' ? '#002338' : '#808080' );
+		$module = $this->replace( $module, 'padding_bottom', $padding_bottom );
 
 		return $module;
 	}
@@ -1077,5 +1085,39 @@ final class ITSEC_Mail {
 		) );
 
 		return $template;
+	}
+
+	public function get_priority_badge( int $priority, string $label ): string {
+		$key = Priority::key( $priority );
+		if ( ! $key ) {
+			return '';
+		}
+
+		$background_colors = [
+			'low' => '#e7e7e7',
+			'medium' => '#ffcb2f',
+			'high' => '#d63638',
+		];
+
+		$text_colors = [
+			'low' => '#232323',
+			'medium' => '#232323',
+			'high' => '#ffffff',
+		];
+
+		$text_weights = [
+			'low' => '400',
+			'medium' => '400',
+			'high' => '600',
+		];
+
+		$template = $this->get_template( 'priority.html' );
+		return $this->replace_all( $template, [
+			'icon_url' => $this->get_image_url( "priority_icon_$key" ),
+			'background_color' => $background_colors[ $key ] ?? '',
+			'text_color' => $text_colors[ $key ] ?? '',
+			'text_weight' => $text_weights[ $key ] ?? '',
+			'label' => $label,
+		]);
 	}
 }

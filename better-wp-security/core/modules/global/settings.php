@@ -58,11 +58,9 @@ final class ITSEC_Global_Settings extends Config_Settings {
 	public function get_settings_schema() {
 		$schema = parent::get_settings_schema();
 
-		$schema['properties']['proxy']['enum']      = array_keys( ITSEC_Lib_IP_Detector::get_proxy_types() );
-		$schema['properties']['proxy']['enumNames'] = array_values( ITSEC_Lib_IP_Detector::get_proxy_types() );
+		$schema['properties']['proxy']['oneOf'] = ITSEC_Lib::build_one_of_schema( ITSEC_Lib_IP_Detector::get_proxy_types() );
 
-		$schema['properties']['proxy_header']['enum']      = ITSEC_Lib_IP_Detector::get_proxy_headers();
-		$schema['properties']['proxy_header']['enumNames'] = array_map( static function ( $header ) {
+		$header_options                                = array_combine( ITSEC_Lib_IP_Detector::get_proxy_headers(), array_map( static function ( $header ) {
 			if ( 0 === strpos( $header, 'HTTP_' ) ) {
 				$header = substr( $header, 5 );
 			}
@@ -73,7 +71,8 @@ final class ITSEC_Global_Settings extends Config_Settings {
 			$header = str_replace( [ 'Ip', 'Cf' ], [ 'IP', 'CF' ], $header );
 
 			return $header;
-		}, ITSEC_Lib_IP_Detector::get_proxy_headers() );
+		}, ITSEC_Lib_IP_Detector::get_proxy_headers() ) );
+		$schema['properties']['proxy_header']['oneOf'] = ITSEC_Lib::build_one_of_schema( $header_options );
 
 		return $schema;
 	}

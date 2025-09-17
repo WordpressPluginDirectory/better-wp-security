@@ -273,8 +273,7 @@ final class Logs_Controller extends \WP_REST_Controller {
 			'type'  => 'array',
 			'items' => [
 				'type'      => 'string',
-				'enum'      => array_keys( $this->types ),
-				'enumNames' => array_values( $this->types ),
+				'oneOf'     => \ITSEC_Lib::build_one_of_schema($this->types),
 			],
 		];
 		$params['user']               = [

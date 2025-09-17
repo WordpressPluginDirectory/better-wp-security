@@ -1101,3 +1101,15 @@
 9.3.9 - 2025-07-08 - Timothy Jacobs
 	Tweak: Reduce number of steps in the onboarding sequence.
 	Bug Fix: Notification Center settings could not be properly saved.
+9.3.10 - 2025-07-16 - Timothy Jacobs
+	Tweak: Update SolidWP Logo.
+9.4.0 - 2025-09-15 - Volodymyr Shelmuk
+	Learn more: https://solidwp.com/?p=110379
+	Important: Solid Security now requires PHP 7.4 or later.
+	New: Patchstack Priority tells you how quickly you should address a vulnerability so you can focus on the most critical issues.
+	New: The Security Digest email includes a complete list of vulnerabilities affecting your site.
+	Enhancement: The Site Scan email now only includes newly found vulnerabilities to prevent notification fatigue.
+	Enhancement: Site Scans now run four times daily to detect new vulnerabilities.
+	Tweak: Make frontend JS code compatible with React 18.
+9.4.1 - 2025-09-15 - Volodymyr Shelmuk
+    Bug Fix: Missing assets in release 9.4.0.

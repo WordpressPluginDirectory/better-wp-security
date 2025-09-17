@@ -12,3 +12,4 @@ export { default as ResultSummary } from './result-summary';
 export { ActiveUpdatesBadge, VirtualPatchingBadge } from './badges';
 export { default as PageControl } from './page-controller';
 export * from './rive';
+export { default as Priority } from './priority';

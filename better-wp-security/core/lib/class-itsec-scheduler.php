@@ -266,9 +266,14 @@ abstract class ITSEC_Scheduler {
 				}
 			}
 
-			$schedule = $definition['schedule'];
-			$data     = $definition['data'] ?? [];
-			$opts     = $definition['opts'] ?? [];
+			if ( is_array( $definition['schedule'] ) ) {
+				$schedule = $definition['schedule'][ ITSEC_Core::get_install_type() ];
+			} else {
+				$schedule = $definition['schedule'];
+			}
+
+			$data = $definition['data'] ?? [];
+			$opts = $definition['opts'] ?? [];
 
 			if ( isset( $opts['fire_at'] ) ) {
 				$opts['fire_at'] = ITSEC_Core::get_current_time_gmt() + $opts['fire_at'];

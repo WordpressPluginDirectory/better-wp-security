@@ -15,9 +15,7 @@ import { useGlobalNavigationUrl } from '@ithemes/security-utils';
 import { EmptyState } from './index';
 import {
 	vulnerabilityIcon,
-	severityColor,
 	statusIcon,
-	StyledSeverity,
 	StyledListHeading,
 	StyledList,
 	StyledTopRow,
@@ -25,6 +23,7 @@ import {
 	StyledLink,
 	StyledStatusResolution,
 } from './styles';
+import { PatchPriority } from '@ithemes/security.pages.vulnerabilities';
 
 export default function VulnerabilityList( { cardData } ) {
 	return (
@@ -48,7 +47,7 @@ function VulnerabilityListItem( { vulnerability } ) {
 				{ vulnerability.software.type.slug !== 'wordpress' && (
 					<Text weight={ 500 } text={ vulnerability.software.label || vulnerability.software.slug } />
 				) }
-				<StyledSeverity backgroundColor={ severityColor( vulnerability.details.score ) } weight={ 600 } text={ vulnerability.details.score ?? '??' } />
+				<PatchPriority priority={ vulnerability.details.patch_priority } score={ vulnerability.details.score } />
 				<Text
 					text={ sprintf(
 						/* translators: 1. Human time diff. */

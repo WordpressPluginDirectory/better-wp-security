@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 import domReady from '@wordpress/dom-ready';
 import { getPlugins } from '@wordpress/plugins';
 
@@ -25,6 +25,6 @@ domReady( () => {
 		}
 
 		const userId = Number.parseInt( el.dataset.user, 10 );
-		render( <App userId={ userId } plugins={ plugins } canManage={ canManage } useShadow />, el );
+		createRoot( el ).render( <App userId={ userId } plugins={ plugins } canManage={ canManage } useShadow /> );
 	}
 } );

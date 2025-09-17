@@ -4,6 +4,8 @@
 import { dateI18n } from '@wordpress/date';
 import { __, sprintf } from '@wordpress/i18n';
 import { createInterpolateElement } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { Icon } from '@wordpress/icons';
 
 /**
  * SolidWP dependencies
@@ -24,8 +26,9 @@ import {
 	CardHeaderTitle,
 } from '@ithemes/security.dashboard.dashboard';
 import { HiResIcon } from '@ithemes/security-ui';
-import { Patchstack } from '@ithemes/security-style-guide';
+import { Patchstack, PurpleShield, ExternalLink } from '@ithemes/security-style-guide';
 import { useGlobalNavigationUrl } from '@ithemes/security-utils';
+import { coreStore } from '@ithemes/security.packages.data';
 import VulnerabilityList from './list';
 import VulnerabilityTable from './table';
 import {
@@ -34,8 +37,11 @@ import {
 	StyledSuccessText,
 	StyledContainer,
 	StyledBrand,
-	StyledBrandSmall,
 	StyledFooter,
+	StyledTitleContainer,
+	StyledDivider,
+	StyledGetPro,
+	StyledGetProText,
 } from './styles';
 
 export function EmptyState( { date } ) {
@@ -81,7 +87,37 @@ export function EmptyState( { date } ) {
 	);
 }
 
+function PoweredByPatchstack( { isSmall = false, direction = 'column' } ) {
+	return (
+		<StyledBrand isSmall={ isSmall } direction={ direction }>
+			<Text size={ TextSize.SMALL } weight={ 600 } text={ __( 'Powered by', 'better-wp-security' ) } />
+			<Patchstack height={ 21 } alt={ __( 'Patchstack', 'better-wp-security' ) } />
+		</StyledBrand>
+	);
+}
+
+function GetPro( { isSmall } ) {
+	return <StyledGetPro href={ 'https://go.solidwp.com/vulnerable-software-header-cta' } target="_blank" isSmall={ isSmall }>
+		{ ! isSmall && <Icon icon={ <PurpleShield /> } size={ 24 } /> }
+		<StyledGetProText>
+			{ /* Text UI component is not clickable inside draggableHandle */ }
+			{ ! isSmall && <span>{ __( 'Get Improved Vulnerability Scanning', 'better-wp-security' ) }</span> }
+			{ ! isSmall && <span>{ __( 'Upgrade to Solid Security Pro.', 'better-wp-security' ) }</span> }
+			{ isSmall && <span>{ __( 'Improve Scanning', 'better-wp-security' ) }</span> }
+		</StyledGetProText>
+		<ExternalLink />
+	</StyledGetPro>;
+}
+
 export default function VulnerableSoftware( { card, config, eqProps } ) {
+	const { installType } = useSelect(
+		( select ) => ( {
+			installType: select( coreStore ).getInstallType(),
+		} ),
+		[]
+	);
+
+	const isFree = installType === 'free';
 	const isSmall = eqProps[ 'max-width' ] && eqProps[ 'max-width' ].includes( '400px' );
 	const isWide = eqProps[ 'min-width' ] && eqProps[ 'min-width' ].includes( '1220px' );
 	/* translators: 1. The date of the last check. */
@@ -91,7 +127,15 @@ export default function VulnerableSoftware( { card, config, eqProps } ) {
 		<StyledContainer>
 			<CardHeader>
 				<div>
-					<CardHeaderTitle card={ card } config={ config } />
+					<StyledTitleContainer>
+						<CardHeaderTitle card={ card } config={ config } />
+						{ isFree && ! isSmall && (
+							<>
+								<StyledDivider />
+								<PoweredByPatchstack isSmall direction={ 'row' } />
+							</>
+						) }
+					</StyledTitleContainer>
 					{ card.data.date && (
 						<Text
 							size={ TextSize.SMALL }
@@ -100,16 +144,9 @@ export default function VulnerableSoftware( { card, config, eqProps } ) {
 						/>
 					) }
 				</div>
-				{ isSmall
-					? <StyledBrandSmall>
-						<Text weight={ 600 } text={ __( 'Powered by', 'better-wp-security' ) } />
-						<Patchstack height={ 21 } />
-					</StyledBrandSmall>
-					: <StyledBrand>
-						<Text size={ TextSize.SMALL } weight={ 600 } text={ __( 'Powered by', 'better-wp-security' ) } />
-						<Patchstack height={ 21 } alt={ __( 'Patchstack', 'better-wp-security' ) } />
-					</StyledBrand>
-				}
+				{ ! isFree && <PoweredByPatchstack isSmall={ isSmall } /> }
+				{ isFree && ! isSmall && <GetPro /> }
+				{ isFree && isSmall && <div><PoweredByPatchstack isSmall={ isSmall } direction={ 'row' } /><GetPro isSmall /> </div> }
 			</CardHeader>
 			{ isSmall
 				? <VulnerabilityList cardData={ card.data } />

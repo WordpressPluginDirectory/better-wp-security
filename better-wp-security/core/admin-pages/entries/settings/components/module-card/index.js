@@ -4,6 +4,7 @@
 import { useState } from '@wordpress/element';
 import { chevronDown as openedIcon, chevronUp as closedIcon, help as helpIcon } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
+import { createSlotFill } from '@wordpress/components';
 
 /**
  * SolidWP dependencies
@@ -28,6 +29,10 @@ import {
 	StyledModulePanelTitle,
 	StyledModulePanelTrigger,
 } from './styles';
+
+const { Slot: ModulePanelHeaderSlot, Fill: ModulePanelHeaderFill } = createSlotFill( 'ModulePanelHeader' );
+
+export { ModulePanelHeaderFill };
 
 export default function ModuleCard( { module, isHighlighted, highlightedSetting, persistStatus } ) {
 	const [ isOpen, setIsOpen ] = useState( false );
@@ -88,6 +93,7 @@ export default function ModuleCard( { module, isHighlighted, highlightedSetting,
 				{ ! canToggleStatus && (
 					<Text text={ module.title } />
 				) }
+				<ModulePanelHeaderSlot fillProps={ { module } } />
 				<Button
 					icon={ helpIcon }
 					label={ __( 'View external documentation.', 'better-wp-security' ) }

@@ -34,9 +34,8 @@ final class End_Users_Question_Pack implements Questions_Provider {
 					return [
 						'type'        => 'array',
 						'items'       => [
-							'type'      => 'string',
-							'enum'      => array_keys( wp_roles()->get_names() ),
-							'enumNames' => array_values( wp_roles()->get_names() ),
+							'type'  => 'string',
+							'oneOf' => \ITSEC_Lib::build_one_of_schema( wp_roles()->get_names() ),
 						],
 						'minItems'    => 1,
 						'uniqueItems' => true,

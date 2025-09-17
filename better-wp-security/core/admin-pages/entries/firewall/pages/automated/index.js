@@ -26,7 +26,7 @@ import { Badge, TextSize, TextVariant, Text } from '@ithemes/ui';
  * Internal dependencies
  */
 import {
-	severityColor,
+	PatchPriority,
 	vulnerabilityIcon,
 } from '@ithemes/security.pages.vulnerabilities';
 import {
@@ -60,13 +60,11 @@ import {
 	StyledVulnerabilityName,
 	StyledVulnerabilityVersion,
 	StyledVulnerabilityDetail,
-	StyledSeverity,
 	StyledThead,
 	StyledTableContainer,
 	StyledTable,
 	StyledTableCardContainer,
 	StyledColumnContainer,
-	StyledVulnerabilityIcon,
 	StyledBannerTitle,
 	StyledVulnerabilityTableHeaderText,
 	StyledButton,
@@ -75,6 +73,7 @@ import {
 	StyledNoVulnerabilitiesContainer,
 	StyledNoVulnerabilitiesButton,
 	StyledHasPatchstackDismiss,
+	StyledTableCell,
 } from './styles';
 
 const patchableQuery = {
@@ -316,10 +315,10 @@ function AutomatedVulnerabilityTable( { items, isSmall, installType, hasPatchsta
 							/>
 							<StyledThead
 								as="th"
-								text={ __( 'Severity', 'better-wp-security' ) }
+								text={ __( 'Priority', 'better-wp-security' ) }
 								textTransform="uppercase"
 								weight={ 400 }
-								align="center"
+								shrink
 							/>
 						</tr>
 					</thead>
@@ -329,7 +328,7 @@ function AutomatedVulnerabilityTable( { items, isSmall, installType, hasPatchsta
 							return (
 								<tr key={ id }>
 									<>
-										<td><StyledVulnerabilityIcon icon={ vulnerabilityIcon( vulnerability.software.type.slug ) } /></td>
+										<td><Text icon={ vulnerabilityIcon( vulnerability.software.type.slug ) } /></td>
 										<td>
 											<StyledCombinedColumns isSmall={ isSmall }>
 												<StyledVulnerabilityName weight={ 500 } text={ vulnerability.software.label || vulnerability.software.slug } />
@@ -339,14 +338,9 @@ function AutomatedVulnerabilityTable( { items, isSmall, installType, hasPatchsta
 												) }
 											</StyledCombinedColumns>
 										</td>
-										<td>
-											<StyledSeverity
-												backgroundColor={ severityColor( vulnerability.details.score ) }
-												status={ vulnerability.status }
-												weight={ 600 }
-												text={ vulnerability.details.score ?? '??' }
-											/>
-										</td>
+										<StyledTableCell>
+											<PatchPriority priority={ vulnerability.details.patch_priority } score={ vulnerability.details.score } />
+										</StyledTableCell>
 									</>
 								</tr>
 							);
